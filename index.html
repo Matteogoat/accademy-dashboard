@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Academy Control Satellite - Control Panel</title>
+    <title>Academy Control Satellite - Dashboard Ufficiale</title>
     <style>
         :root {
             --bg-color: #080914;
@@ -33,20 +33,25 @@
             min-height: 100vh; display: flex; flex-direction: column;
             justify-content: center; align-items: center; padding: 20px;
             text-align: center; position: relative;
-            background: url('https://discord.com') no-repeat center center/cover;
+            background: url('https://github.io') no-repeat center center/cover;
         }
         .intro-screen::before {
             content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(8, 9, 20, 0.85); backdrop-filter: blur(8px); z-index: 1;
+            background: rgba(8, 9, 20, 0.88); backdrop-filter: blur(10px); z-index: 1;
         }
         .intro-card {
             position: relative; z-index: 2; background: var(--panel-bg);
-            padding: 50px 30px; border-radius: var(--smooth-radius); max-width: 750px; width: 100%;
+            padding: 45px 25px; border-radius: var(--smooth-radius); max-width: 700px; width: 100%;
             box-shadow: var(--plastic-shadow); border: 1px solid rgba(255,255,255,0.08);
-            transform: translateY(0); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-align: center;
+        }
+        .intro-logo {
+            width: 140px; height: 140px; border-radius: 50%;
+            margin-bottom: 25px; border: 4px solid var(--primary);
+            box-shadow: 0 0 20px rgba(88,101,242,0.4);
         }
         .intro-card h1 {
-            font-size: 2.4rem; margin-bottom: 20px; font-weight: 800;
+            font-size: 2.5rem; margin-bottom: 20px; font-weight: 800;
             background: linear-gradient(45deg, var(--primary), var(--vip));
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
@@ -57,79 +62,165 @@
             cursor: pointer; box-shadow: 0 8px 24px rgba(88,101,242,0.4); transition: all 0.3s ease;
         }
         .btn-action:hover { background: #4752c4; transform: scale(1.03); box-shadow: 0 12px 30px rgba(88,101,242,0.6); }
-        .btn-action:active { transform: scale(0.98); }
         .main-dashboard { display: none; min-height: 100vh; padding: 40px 20px; max-width: 1440px; margin: 0 auto; animation: fadeIn 0.6s ease-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         .dash-layout { display: grid; grid-template-columns: 1fr; gap: 30px; align-items: start; }
         .dash-left {
-            background: var(--panel-bg); padding: 35px 25px; border-radius: var(--smooth-radius);
-            box-shadow: var(--plastic-shadow); border: 1px solid rgba(255,255,255,0.05); position: relative; overflow: hidden;
+            background: var(--panel-bg); padding: 40px 30px; border-radius: var(--smooth-radius);
+            box-shadow: var(--plastic-shadow); border: 1px solid rgba(255,255,255,0.05); position: relative;
         }
-        .dash-left h2 { font-size: 1.9rem; margin-bottom: 20px; font-weight: 700; }
-        .dash-left p { color: var(--text-muted); line-height: 1.7; margin-bottom: 20px; font-size: 1.05rem; }
+        .dash-left h2 { font-size: 2.2rem; margin-bottom: 20px; font-weight: 700; color: var(--text-main); }
+        .dash-left p { color: var(--text-muted); line-height: 1.8; margin-bottom: 20px; font-size: 1.08rem; }
+        .dash-left ul { margin-left: 20px; margin-bottom: 25px; color: var(--text-muted); }
+        .dash-left ul li { margin-bottom: 12px; font-size: 1.05rem; line-height: 1.6; }
         .dash-right { display: flex; flex-direction: column; gap: 20px; }
         .sidebar-btn {
-            display: flex; align-items: center; justify-content: center; width: 100%; padding: 20px;
-            font-size: 1.1rem; font-weight: 700; border: none; border-radius: var(--smooth-radius);
+            display: flex; align-items: center; justify-content: center; width: 100%; padding: 22px;
+            font-size: 1.15rem; font-weight: 700; border: none; border-radius: var(--smooth-radius);
             cursor: pointer; transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1); text-decoration: none; text-align: center; box-shadow: var(--plastic-shadow);
         }
         .sidebar-btn:hover { transform: scale(1.02) translateY(-1px); filter: brightness(1.15); }
-        .sidebar-btn:active { transform: scale(0.98); }
         .btn-invite { background: linear-gradient(135deg, #007aff 0%, #f1c40f 100%); color: white; }
         .btn-join { background: #23272a; color: white; border: 1px solid rgba(255,255,255,0.1); }
         .btn-plans { background: linear-gradient(135deg, #f1c40f 0%, #b89200 100%); color: #080914; }
-        .plans-section { margin-top: 50px; text-align: center; background: var(--panel-bg); padding: 40px 25px; border-radius: var(--smooth-radius); box-shadow: var(--plastic-shadow); border: 1px solid rgba(255,255,255,0.05); }
-        .plans-section h3 { font-size: 2rem; margin-bottom: 35px; font-weight: 800; }
-        .carousel-container { position: relative; max-width: 100%; margin: 0 auto; overflow: hidden; border-radius: var(--smooth-radius); background: var(--panel-nested); border: 1px solid rgba(255,255,255,0.05); box-shadow: inset 0 2px 10px rgba(0,0,0,0.5); }
+        .plans-section { margin-top: 50px; text-align: center; background: var(--panel-bg); padding: 50px 25px; border-radius: var(--smooth-radius); box-shadow: var(--plastic-shadow); border: 1px solid rgba(255,255,255,0.05); }
+        .plans-section h3 { font-size: 2.2rem; margin-bottom: 35px; font-weight: 800; }
+        .carousel-container { position: relative; max-width: 550px; margin: 0 auto; overflow: hidden; border-radius: var(--smooth-radius); background: var(--panel-nested); border: 1px solid rgba(255,255,255,0.05); box-shadow: inset 0 2px 10px rgba(0,0,0,0.5); }
         .carousel-track { display: flex; transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1); width: 400%; }
-        .plan-card { width: 25%; padding: 45px 25px; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; }
-        .plan-card h4 { font-size: 1.7rem; margin-bottom: 12px; font-weight: 700; }
-        .plan-card .price { font-size: 2rem; font-weight: 800; margin-bottom: 25px; }
+        .plan-card { width: 25%; padding: 50px 30px; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; }
+        .plan-card h4 { font-size: 1.8rem; margin-bottom: 12px; font-weight: 700; }
+        .plan-card .price { font-size: 2.2rem; font-weight: 800; margin-bottom: 25px; }
         .plan-card ul { text-align: left; margin-bottom: 35px; list-style: none; color: var(--text-muted); }
-        .plan-card ul li { margin-bottom: 12px; font-size: 1rem; display: flex; align-items: center; gap: 10px; }
+        .plan-card ul li { margin-bottom: 12px; font-size: 1.05rem; display: flex; align-items: center; gap: 10px; }
         .btn-discover { padding: 12px 30px; background: rgba(255,255,255,0.06); color: var(--text-main); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; cursor: pointer; font-weight: 700; transition: all 0.2s ease; }
         .btn-discover:hover { background: var(--text-main); color: var(--bg-color); }
         .p-base h4 { color: var(--text-main); } .p-premium h4 { color: var(--premium); } .p-deluxe h4 { color: var(--deluxe); }
         .p-vip { background: linear-gradient(180deg, rgba(155,93,229,0.05) 0%, rgba(155,93,229,0.15) 100%); } .p-vip h4 { color: var(--vip); }
-        .tech-page { display: none; background: var(--panel-nested); padding: 35px 25px; border-radius: var(--smooth-radius); max-width: 850px; margin: 40px auto 0 auto; border: 1px solid rgba(255,255,255,0.05); text-align: left; box-shadow: inset 0 2px 10px rgba(0,0,0,0.5); animation: fadeIn 0.4s ease-out; }
-        .tech-page h3 { font-size: 1.7rem; margin-bottom: 15px; color: var(--primary); }
-        .tech-list { list-style: none; margin: 20px 0; } .tech-list li { padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05); color: var(--text-muted); font-size: 1rem; }
-        .btn-back-grid { width: 100%; margin-top: 15px; padding: 14px; background: rgba(255,255,255,0.05); border: none; border-radius: 14px; color: white; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+        .tech-page { display: none; background: var(--panel-nested); padding: 40px 30px; border-radius: var(--smooth-radius); max-width: 850px; margin: 40px auto 0 auto; border: 1px solid rgba(255,255,255,0.05); text-align: left; box-shadow: inset 0 2px 10px rgba(0,0,0,0.5); animation: fadeIn 0.4s ease-out; }
+        .tech-page h3 { font-size: 1.9rem; margin-bottom: 15px; color: var(--primary); }
+        .tech-list { list-style: none; margin: 25px 0; } .tech-list li { padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.05); color: var(--text-muted); font-size: 1.05rem; }
+        .btn-back-grid { width: 100%; margin-top: 20px; padding: 15px; background: rgba(255,255,255,0.05); border: none; border-radius: 14px; color: white; font-weight: 600; cursor: pointer; transition: background 0.2s; }
         .btn-back-grid:hover { background: rgba(255,255,255,0.1); }
         @media (min-width: 900px) {
-            .intro-card h1 { font-size: 2.8rem; } .intro-card p { font-size: 1.15rem; }
-            .dash-layout { grid-template-columns: 1fr 400px; gap: 40px; } .dash-left { padding: 45px; }
-            .dash-left h2 { font-size: 2.2rem; } .dash-left p { font-size: 1.1rem; }
-            .plans-section { padding: 60px 40px; } .plans-section h3 { font-size: 2.4rem; }
-            .plan-card h4 { font-size: 2rem; } .plan-card .price { font-size: 2.4rem; }
-            .plan-card ul li { font-size: 1.1rem; } .tech-page { padding: 45px; }
-            .tech-page h3 { font-size: 2rem; } .tech-list li { font-size: 1.05rem; }
+            .dash-layout { grid-template-columns: 1fr 400px; gap: 40px; }
             .btn-back-grid { width: auto; margin-top: 0; margin-left: 20px; }
-            .dash-left::after { content: ''; position: absolute; bottom: 0; right: 0; width: 200px; height: 200px; background: url('https://discord.com') no-repeat right bottom/contain; opacity: 0.05; pointer-events: none; }
         }
     </style>
 </head>
 <body>
     <section class="intro-screen" id="introSection">
         <div class="intro-card">
+            <img src="https://github.io" class="intro-logo" alt="Academy Bot Logo">
             <h1>Academy Control Satellite</h1>
-            <p>Benvenuto nell'infrastruttura di controllo del satellite (ecosistema per amministrazione, verifica e addestramento server Discord con intelligence e anti-nuke).</p>
+            <p>Benvenuto nell'infrastruttura di controllo del satellite. Un ecosistema di rete progettato per l'amministrazione, la verifica automatica e l'addestramento dell'organico dei server Discord, protetto da moduli d'intelligence passivi e radar anti-nuke.</p>
             <button class="btn-action" onclick="enterDashboard()">Esplora la Dashboard</button>
         </div>
     </section>
+
     <main class="main-dashboard" id="mainDashboard">
         <div class="dash-layout">
             <div class="dash-left">
                 <h2>Pannello di Monitoraggio Centrale</h2>
-                <p>Supervisione in tempo reale dei bot, registri audit di gilda, database SQLite3 sincronizzato ad albero, aule d'esame private e moduli d'intelligence passivi (Anti-Link, Anti-Raid e Anti-Nuke).</p>
+                
+                <!-- BLOCCO CONTATORI LIVE INTEGRATO -->
+                <div style="display: flex; gap: 15px; margin: 25px 0;">
+                    <div style="flex: 1; background: var(--panel-nested); padding: 20px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.05); text-align: center; box-shadow: var(--plastic-shadow);">
+                        <div style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.5px;">Server Attivi</div>
+                        <div id="statServer" style="font-size: 2.2rem; font-weight: 800; color: var(--primary);">...</div>
+                    </div>
+                    <div style="flex: 1; background: var(--panel-nested); padding: 20px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.05); text-align: center; box-shadow: var(--plastic-shadow);">
+                        <div style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.5px;">Studenti Registrati</div>
+                        <div id="statStudenti" style="font-size: 2.2rem; font-weight: 800; color: var(--vip);">...</div>
+                    </div>
+                </div>
+
+                <p>La dashboard consente la supervisione in tempo reale delle istanze attive dei bot. Attraverso questo modulo web è possibile monitorare i registri audit di gilda, verificare lo stato del database SQLite3 sincronizzato ad albero e gestire l'allocazione delle aule d'esame private.</p>
+                <p>I comandi globali e i moduli d'intelligence passivi (Anti-Link, Anti-Raid e Anti-Nuke) operano in background con pieno isolamento amministrativo delle reclute.</p>
+                
+                <h3 style="margin-top: 35px; margin-bottom: 15px; color: var(--primary);">Descrizione Moduli di Sicurezza</h3>
+                <ul>
+                    <li>🛰️ **Moduli 1-2 (Base):** Analisi basica dei registri e monitoraggio attività standard delle reclute d'ingresso.</li>
+                    <li>🗜️ **Moduli 3-4 (Premium):** Compressione dati audit e tracciamento sanzioni disciplinari integrato col circuito /mod.</li>
+                    <li>🛰️ **Moduli 5-7 (Deluxe):** Scansione radar avanzata dei canali log e controllo incrociato dei flussi d'ingresso gilda.</li>
+                    <li>🛸 **Modulo 8 (VIP Forensic Audit):** Analisi forense di sicurezza e contenimento minacce ad attivazione immediata su Server VIP.</li>
+                    <li>🪐 **Modulo 9 (VIP Purge Protocol):** Scansione strutturale di rete ed estirpazione spia dei bot/account non autorizzati.</li>
+                </ul>
+
+                <h3 style="margin-top: 35px; margin-bottom: 15px; color: var(--primary);">Suite Gestione Accademia (10 Opzioni)</h3>
+                <ul style="grid-template-columns: 1fr 1fr; display: grid; list-style-type: none; margin-left: 0; gap: 12px;">
+                    <li>🏫 1. Crea Aula Esame [BASE]</li>
+                    <li>🔒 2. Smantella Aula Esame [BASE]</li>
+                    <li>📝 3. Genera Quiz Rapido [BASE]</li>
+                    <li>⏱️ 4. Scenario Casuale [BASE]</li>
+                    <li>📡 5. Ispezione Radar Log [BASE]</li>
+                    <li>🗄️ 6. Stato Database [BASE]</li>
+                    <li>🔄 7. Reset Strike Accumulati [BASE]</li>
+                    <li>🎓 8. Promuovi a Staffer [PREMIUM]</li>
+                    <li>📉 9. Boccia Sessione Recluta [PREMIUM]</li>
+                    <li>🔓 10. Sblocco Emergenza [PREMIUM]</li>
+                </ul>
             </div>
+            
             <div class="dash-right">
-                <a href="discord://-/channels/1195455467158556736" class="sidebar-btn btn-invite">Invita il Bot [filegen-via-code]</a>
-                <a href="discord://://discord.com" class="sidebar-btn btn-join">Entra con noi [filegen-via-code]</a>
+                <button onclick="openLink('invite')" class="sidebar-btn btn-invite">Invita il Bot</button>
+                <button onclick="openLink('server')" class="sidebar-btn btn-join">Entra con noi</button>
                 <button class="sidebar-btn btn-plans" onclick="scrollToPlans()">Esplora i piani aggiuntivi</button>
             </div>
+
             <div class="plans-section" id="plansSection">
-                <h3>Livelli di Licenza Ecosistema (Base, Premium, Deluxe, VIP con relative specifiche tecniche e link al server Discord) [filegen-via-code]</h3>
+                <h3>Livelli di Licenza Ecosistema</h3>
+                <div class="carousel-container">
+                    <div class="carousel-track" id="carouselTrack">
+                        <div class="plan-card p-base">
+                            <h4>Piano Base</h4>
+                            <div class="price">Gratuito</div>
+                            <ul>
+                                <li>📌 Modulo /quiz abilitato</li>
+                                <li>📌 Creazione aule esame</li>
+                                <li>📌 Database SQLite3 locale</li>
+                            </ul>
+                            <button class="btn-discover" onclick="showTech('base')">Scopri di più</button>
+                        </div>
+                        <div class="plan-card p-premium">
+                            <h4>Piano Premium</h4>
+                            <div class="price">Tier 1</div>
+                            <ul>
+                                <li>📌 Ticket aule provini</li>
+                                <li>📌 Suite /mod sanzioni</li>
+                                <li>📌 Funzioni promozione</li>
+                            </ul>
+                            <button class="btn-discover" onclick="showTech('premium')">Scopri di più</button>
+                        </div>
+                        <div class="plan-card p-deluxe">
+                            <h4>Piano Deluxe</h4>
+                            <div class="price">Tier 2</div>
+                            <ul>
+                                <li>📌 Quiz pool avanzato</li>
+                                <li>📌 Benvenuto avatar grafico</li>
+                                <li>📌 Moduli intelligence 5,6,7</li>
+                            </ul>
+                            <button class="btn-discover" onclick="showTech('deluxe')">Scopri di più</button>
+                        </div>
+                        <div class="plan-card p-vip">
+                            <h4>Piano VIP</h4>
+                            <div class="price">Tier 3</div>
+                            <ul>
+                                <li>📌 Blacklist permanente</li>
+                                <li>📌 Pardon globale fedina</li>
+                                <li>📌 Moduli intelligence 8 e 9</li>
+                            </ul>
+                            <button class="btn-discover" onclick="showTech('vip')">Scopri di più</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tech-page" id="techPage">
+                    <h3 id="techTitle">Dettagli Tecnici</h3>
+                    <p id="techDesc">Analisi strutturale della licenza...</p>
+                    <ul class="tech-list" id="techList"></ul>
+                    <button class="btn-action" onclick="openLink('server')" style="padding:14px 30px; font-size:1rem;">Scopri di più sul Server</button>
+                    <button class="btn-back-grid" onclick="closeTech()">Chiudi Specifiche</button>
+                </div>
             </div>
         </div>
     </main>
@@ -154,10 +245,27 @@
             osc.stop(audioCtx.currentTime + 0.07);
         }
 
+        // AGGIORNAMENTO DINAMICO DEI DATI DA RENDER CON IL TUO LINK
+        async function fetchLiveStats() {
+            try {
+                const risposta = await fetch('https://onrender.com');
+                if (risposta.ok) {
+                    const dati = await risposta.json();
+                    document.getElementById('statServer').innerText = dati.server_attivi || 0;
+                    document.getElementById('statStudenti').innerText = dati.studenti_registrati || 0;
+                }
+            } catch (errore) {
+                console.log("Satellite offline o in caricamento:", errore);
+                document.getElementById('statServer').innerText = "0";
+                document.getElementById('statStudenti').innerText = "0";
+            }
+        }
+
         function enterDashboard() {
             playAsmr();
             document.getElementById('introSection').style.display = 'none';
             document.getElementById('mainDashboard').style.display = 'block';
+            fetchLiveStats(); // Estrazione immediata dei dati all'ingresso
             startCarousel();
         }
 
@@ -188,7 +296,7 @@
             premium: { 
                 title: "Infrastruttura Licenza Premium [TIER 1]", 
                 desc: "Aggiunge la suite di moderazione amministrativa centralizzata sul server Discord.", 
-                list: ["Interfaccia ticket persistente via bottone per l'apertura delle camere provini", "Accesso al centro sanzioni amministrativo /mod con assegnazione strike", "Integrazione del pannello interruttori /toggle per lo spegnimento selettivo dei moduli"] 
+                list: ["Interfaccia ticket ticket_setup via bottone per l'apertura delle camere provini", "Accesso al centro sanzioni amministrativo /mod con sanzioni strike", "Integrazione del pannello interruttori /toggle per lo spegnimento selettivo dei moduli"] 
             },
             deluxe: { 
                 title: "Infrastruttura Licenza Deluxe [TIER 2]", 
@@ -197,8 +305,8 @@
             },
             vip: { 
                 title: "Infrastruttura Licenza VIP [TIER 3]", 
-                desc: "Massimo livello di isolamento strutturale, bonifica fedine penali e sicurezza radar.", 
-                list: ["Integrazione della Blacklist permanente e del Pardon Globale dei membri", "Attivazione dei moduli forensi avanzati 8 (Audit radar) e 9 (Purge bot spia non autorizzati)", "Sistema di accoglienza monumentale dorato con estrazione dei banner di gilda"] 
+                desc: "Massimo livello di isolamento strutturale, sanzioni blacklist e sicurezza radar.", 
+                list: ["Integrazione della Blacklist permanente e del Pardon Globale dei membri via /mod", "Attivazione dei moduli forensi avanzati 8 (Audit radar) e 9 (Purge bot spia non autorizzati)", "Sistema di accoglienza monumentale dorato con estrazione dei banner di gilda"] 
             }
         };
 
@@ -217,6 +325,7 @@
                 listContainer.appendChild(li);
             });
             document.getElementById('techPage').style.display = 'block';
+            document.getElementById('techPage').scrollIntoView({ behavior: 'smooth' });
         }
 
         function closeTech() { 
@@ -225,10 +334,33 @@
             startCarousel(); 
         }
 
+        function openLink(type) {
+            playAsmr();
+            let webUrl = "";
+            let appUrl = "";
+            
+            if (type === 'invite') {
+                webUrl = "https://discord.com";
+                appUrl = "discord://-/oauth2/authorize?client_id=1195455467158556736&permissions=8&scope=bot%20applications.commands";
+            } else if (type === 'server') {
+                webUrl = "https://discord.gg";
+                appUrl = "discord://://discord.com";
+            }
+            
+            let clickedAt = +new Date();
+            window.location.href = appUrl;
+            
+            setTimeout(function() {
+                if (+new Date() - clickedAt < 800) {
+                    window.open(webUrl, '_blank');
+                }
+            }, 500);
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('button, a').forEach(el => {
+            document.querySelectorAll('button').forEach(el => {
                 el.addEventListener('click', () => { 
-                    playAsmr(); 
+                    if(el.getAttribute('onclick') === null) playAsmr(); 
                 });
             });
         });
