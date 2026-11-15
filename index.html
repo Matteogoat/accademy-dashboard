@@ -3,300 +3,279 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Staff Academy - Virtual Cinematic Experience</title>
+    <title>Polaris Studios - Accademia Core</title>
     <style>
         :root {
-            --wood-dark: #2c1a11; --wood-light: #5c3a21; --gold-neon: #ffd700;
-            --primary: #5865F2; --premium: #007aff; --deluxe: #f1c40f; --vip: #9b5de5;
-            --text-main: #f8f9fa; --panel-glass: rgba(13, 15, 30, 0.75);
+            --bg-dark: #070b19;
+            --primary-blue: #007aff;
+            --vip-purple: #9b5de5;
+            --neon-green: #2ecc71;
+            --text-light: #ffffff;
+            --text-muted: #8e9bb0;
+            --plastic-lucid: rgba(255, 255, 255, 0.03);
+            --plastic-border: 1px solid rgba(255, 255, 255, 0.12);
+            --morbido-radius: 24px;
+            --fluid-shadow: 0 25px 60px rgba(0, 0, 0, 0.75), inset 0 2px 4px rgba(255, 255, 255, 0.15);
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-        body { background: #030408; color: var(--text-main); overflow-x: hidden; }
-        
-        /* ATTO 1: INGRESSO UNIVERSITÀ - PORTE REALI IN LEGNO FOTOREALISTICO */
-        .uni-gate-scene {
-            position: relative; min-height: 100vh; width: 100vw; display: flex; flex-direction: column;
-            justify-content: center; align-items: center; text-align: center; overflow: hidden; perspective: 1800px;
-            background: linear-gradient(to bottom, #08091a, #030408);
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, sans-serif; scroll-behavior: smooth; }
+        body {
+            background: var(--bg-dark);
+            color: var(--text-light);
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            position: relative;
         }
-        .wavy-title { animation: ultraOndulation 6s ease-in-out infinite alternate; z-index: 10; padding: 20px; }
-        @keyframes ultraOndulation { 0% { transform: translateY(0) rotate(0deg); } 100% { transform: translateY(-12px) rotate(0.6deg); } }
-        .wavy-title h1 { font-size: 3.5rem; font-weight: 900; margin-bottom: 20px; background: linear-gradient(45deg, #ffffff, var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 0 40px rgba(88,101,242,0.3); }
-        .wavy-title p { color: #d1d4dc; font-size: 1.25rem; max-width: 750px; line-height: 1.8; margin-bottom: 35px; }
-        
-        /* CINEMATICA PORTE IN LEGNO 3D */
-        .cinema-frame { position: absolute; width: 100%; height: 100%; top: 0; left: 0; display: flex; z-index: 5; pointer-events: none; }
-        .gate-left, .gate-right {
-            width: 50%; height: 100%; background: linear-gradient(135deg, var(--wood-dark) 0%, var(--wood-light) 50%, var(--wood-dark) 100%);
-            border: 12px solid #1a0f0a; box-shadow: inset 0 0 80px rgba(0,0,0,0.95), 0 0 40px rgba(0,0,0,0.5);
-            transition: transform 2.2s cubic-bezier(0.77, 0, 0.175, 1); position: relative;
+        #spaceCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none;
         }
-        .gate-left { transform-origin: left center; border-right: 4px solid #110a06; }
-        .gate-right { transform-origin: right center; border-left: 4px solid #110a06; }
-        .brass-handle { width: 35px; height: 35px; background: radial-gradient(circle, #ffe680 0%, #b89200 80%); border-radius: 50%; position: absolute; top: 50%; transform: translateY(-50%); box-shadow: 0 4px 15px rgba(0,0,0,0.6); }
-        .gate-left .brass-handle { right: 20px; } .gate-right .brass-handle { left: 20px; }
-        
-        .uni-gate-scene.open .gate-left { transform: rotateY(-115deg); }
-        .uni-gate-scene.open .gate-right { transform: rotateY(115deg); }
-        .uni-gate-scene.open .wavy-title { opacity: 0; pointer-events: none; transition: opacity 0.6s; }
-
-        /* ATTO 2: AULA CON PAVIMENTO RIFLETTENTE (RAYTRACING) E LAVAGNA 3D */
-        .uni-classroom {
-            display: none; min-height: 100vh; width: 100vw; padding: 60px 20px; opacity: 0; transition: opacity 1.2s;
-            background: radial-gradient(circle at center, #0e1026 0%, #030408 100%); text-align: center; position: relative;
+        .navbar-lucid {
+            width: 100%;
+            padding: 20px 40px;
+            background: rgba(7, 11, 25, 0.75);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 100;
         }
-        .uni-classroom.visible { display: block; opacity: 1; }
-        
-        /* PAVIMENTO RIFLETTENTE FOTOREALISTICO */
-        .mirror-floor {
-            position: absolute; bottom: 0; left: 0; width: 100%; height: 35vh;
-            background: linear-gradient(to top, rgba(14, 16, 38, 0.25), transparent);
-            border-top: 1px solid rgba(255,255,255,0.05); box-shadow: inset 0 20px 40px rgba(0,0,0,0.8); pointer-events: none; z-index: 1;
-        }
-        
-        /* LAVAGNA 3D CORAZZATA */
-        .real-board {
-            background: linear-gradient(135deg, #111a14 0%, #16241e 100%); border: 18px solid #3d200a; border-radius: 6px;
-            max-width: 950px; margin: 0 auto 50px auto; padding: 45px; box-shadow: var(--plastic-shadow), 0 30px 70px rgba(0,0,0,0.9);
-            text-align: left; border-style: ridge; position: relative; z-index: 5;
-        }
-        .real-board h2 { font-family: 'Courier New', monospace; color: #ffffff; font-size: 2.3rem; margin-bottom: 25px; border-bottom: 2px dashed rgba(255,255,255,0.15); padding-bottom: 12px; text-shadow: 0 2px 10px rgba(255,255,255,0.2); }
-        .real-board p, .real-board li { font-family: 'Courier New', monospace; color: #f1f3f5; font-size: 1.08rem; line-height: 1.8; margin-bottom: 12px; }
-        .real-board ul { margin-left: 25px; }
-        /* INTERFACCIA AULA E BOTTONI */
-        .room-interface { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 40px; position: relative; z-index: 5; }
-        .btn-holder { display: flex; flex-direction: column; gap: 25px; width: 100%; max-width: 420px; }
-        .plastic-glass-btn { display: block; width: 100%; padding: 22px; font-size: 1.15rem; font-weight: 800; text-align: center; color: white; text-decoration: none; border-radius: 18px; background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 15px 35px rgba(0,0,0,0.5), inset 0 1px 2px rgba(255,255,255,0.2); transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1); }
-        .plastic-glass-btn:hover { transform: translateY(-4px) scale(1.02); background: rgba(255, 255, 255, 0.07); box-shadow: 0 25px 50px rgba(88,101,242,0.25); border-color: var(--primary); }
-        .btn-purple { border-color: var(--primary); color: #a4adff; } .btn-white { border-color: rgba(255,255,255,0.3); }
-
-        /* PIEDISTALLO IN MARMO GRECO CON EFFETTO RIFLESSO ORO */
-        .pillar-scenery { position: relative; width: 250px; height: 300px; display: flex; flex-direction: column; align-items: center; }
-        .epic-gold-btn {
-            position: absolute; top: -25px; padding: 18px 35px; font-size: 1.1rem; font-weight: 900; color: #020308;
-            background: linear-gradient(135deg, #fff3a8 0%, var(--deluxe) 40%, #e6a100 70%, #805900 100%);
-            border: none; border-radius: 14px; cursor: pointer; box-shadow: 0 0 40px var(--deluxe), inset 0 1px 1px rgba(255,255,255,0.6);
-            animation: hyperFloat 3s ease-in-out infinite; z-index: 25;
-        }
-        @keyframes hyperFloat { 0%, 100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-20px) scale(1.03); filter: brightness(1.1); } }
-        .greek-marble-column {
-            width: 140px; height: 210px; background: linear-gradient(90deg, #dbdbe2 0%, #f7f7fc 40%, #eeeef4 70%, #cfcfd7 100%); margin-top: 45px;
-            border-radius: 6px; box-shadow: 0 25px 50px rgba(0,0,0,0.7), inset 20px 0 25px #ffffff, inset -20px 0 25px #aaaaae; position: relative;
-        }
-        .greek-marble-column::before { content: ''; position: absolute; top: -16px; left: -25px; width: 190px; height: 16px; background: #f4f4fa; box-shadow: 0 8px 16px rgba(0,0,0,0.4); border-radius: 6px; }
-         Greek-marble-column::after { content: ''; position: absolute; bottom: -22px; left: -25px; width: 190px; height: 22px; background: #b8b8c4; border-radius: 6px; }
-
-        /* SCENOGRAFIA 3: LA CINEMATICA DELLA LUNGA DISCESA SOTTERRANEA */
-        .geological-shaft {
-            display: none; width: 100vw; height: 220vh; position: relative;
-            background: linear-gradient(to bottom, #030408 0%, #171007 20%, #281c0c 50%, #422d14 70%, #03040b 100%);
-            overflow: hidden; box-shadow: inset 0 60px 120px #030408, inset 0 -60px 120px #03040b;
-        }
-        .geological-shaft.visible { display: block; }
-        .earth-texture {
-            position: absolute; width: 100%; height: 100%; top: 0; left: 0;
-            background-image: radial-gradient(rgba(0,0,0,0.5) 25%, transparent 25%), radial-gradient(rgba(0,0,0,0.5) 25%, transparent 25%);
-            background-size: 50px 50px; background-position: 0 0, 25px 25px; opacity: 0.22;
-        }
-        .heavy-pipe {
-            position: absolute; width: 50px; height: 100%; background: linear-gradient(90deg, #242731 0%, #4b5260 40%, #30343d 70%, #15161c 100%);
-            border-left: 3px solid rgba(255,255,255,0.08); border-right: 3px solid #000; box-shadow: 25px 0 50px rgba(0,0,0,0.7);
-        }
-        .pipe-l { left: 6%; } .pipe-r { right: 6%; width: 30px; }
-        .hydraulic-valve { position: absolute; width: 85px; height: 35px; background: radial-gradient(circle, #cc2222 0%, #771111 100%); left: -18px; top: 35%; border-radius: 8px; box-shadow: 0 6px 15px rgba(0,0,0,0.6); border: 2px solid #550000; }
-
-        /* SCENOGRAFIA 4: IL CAVEAU IPER-REALISTICO CON MONTAGNE DI SOLDI E ORO */
-        .epic-vault-room {
-            display: none; min-height: 100vh; width: 100vw; padding: 90px 20px; opacity: 0; transition: opacity 1.2s;
-            background: radial-gradient(circle at center, #0f1338 0%, #010206 100%); text-align: center; position: relative;
-        }
-        .epic-vault-room.visible { display: block; opacity: 1; }
-        .epic-vault-room h2 { font-size: 2.8rem; font-weight: 900; margin-bottom: 50px; background: linear-gradient(45deg, #ffffff, #ffe57f, #ffd700); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 0 50px rgba(255,215,0,0.3); }
-        
-        /* MONTAGNE DI LINGOTTI E CASSEFORTE ELETTRONICA */
-        .treasure-floor { margin: 0 auto 50px auto; max-width: 750px; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; pointer-events: none; }
-        .gold-ingot-3d {
-            width: 110px; height: 38px; background: linear-gradient(135deg, #fff5b3 0%, #ffd700 30%, #cc9c00 70%, #735800 100%);
-            border-radius: 4px; box-shadow: 0 12px 25px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.5);
-            transform: skewX(-12deg); position: relative;
-        }
-        .gold-ingot-3d::before { content: '999.9 ORO'; position: absolute; font-size: 0.55rem; font-weight: 900; color: rgba(0,0,0,0.35); top: 11px; left: 16px; letter-spacing: 1px; }
-
-        /* CAROSELLO ROTANTE AUTOMATICO 3D (3 SECONDI) */
-        .vault-carousel-box { position: relative; max-width: 540px; height: 280px; margin: 0 auto 60px auto; perspective: 1200px; }
-        .vault-item-card {
-            position: absolute; width: 100%; height: 100%; top: 0; left: 0; display: none;
-            background: rgba(10, 12, 28, 0.7); backdrop-filter: blur(25px); border-radius: 26px; border: 1px solid rgba(255,255,255,0.1);
-            padding: 40px 30px; text-align: center; box-shadow: 0 25px 55px rgba(0,0,0,0.7), inset 0 1px 1px rgba(255,255,255,0.15);
-            transform-style: preserve-3d; transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-        }
-        .vault-item-card.active { display: block; animation: vaultCardRotate 0.6s ease-out; }
-        @keyframes vaultCardRotate { from { transform: translateZ(-200px) rotateY(-20deg); opacity: 0; } to { transform: translateZ(0) rotateY(0); opacity: 1; } }
-        
-        .vault-item-card h4 { font-size: 1.8rem; margin-bottom: 10px; font-weight: 800; }
-        .vault-item-card .v-price-text { font-size: 2.4rem; font-weight: 900; margin-bottom: 18px; text-shadow: 0 4px 20px rgba(0,0,0,0.4); }
-        .vault-item-card p { font-size: 1.05rem; color: #d6d9e0; margin-bottom: 25px; }
-        
-        .vc-base h4 { color: #ffffff; } .vc-base { box-shadow: 0 0 45px rgba(255,255,255,0.06), 0 25px 55px rgba(0,0,0,0.7); }
-        .vc-premium h4, .vc-premium .v-price-text { color: var(--premium); } .vc-premium { box-shadow: 0 0 45px rgba(0,122,255,0.22), 0 25px 55px rgba(0,0,0,0.7); }
-        .vc-deluxe h4, .vc-deluxe .v-price-text { color: var(--deluxe); } .vc-deluxe { box-shadow: 0 0 45px rgba(241,196,15,0.22), 0 25px 55px rgba(0,0,0,0.7); }
-        .vc-vip h4, .vc-vip .v-price-text { color: var(--vip); } .vc-vip { box-shadow: 0 0 45px rgba(155,93,229,0.22), 0 25px 55px rgba(0,0,0,0.7); border-color: var(--vip); }
-
-        .btn-open-inspect { padding: 12px 30px; background: rgba(255,255,255,0.06); color: white; border: 1px solid rgba(255,255,255,0.15); border-radius: 12px; cursor: pointer; font-weight: 700; transition: background 0.2s; }
-        .btn-open-inspect:hover { background: white; color: #020308; }
-
-        /* SCHEDA ISPEZIONE GLASSMORPHISM IN BASSO */
-        .full-audit-display {
-            display: none; background: rgba(8, 10, 24, 0.8); backdrop-filter: blur(30px); max-width: 880px; margin: 45px auto 0 auto;
-            padding: 50px 40px; border-radius: 26px; border: 1px solid rgba(255,255,255,0.08); text-align: left;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.1); animation: auditReveal 0.6s cubic-bezier(0.19, 1, 0.22, 1);
-        }
-        @keyframes auditReveal { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
-        .full-audit-display h3 { font-size: 2.1rem; margin-bottom: 8px; font-weight: 800; }
-        .full-audit-display .audit-price { font-size: 2.6rem; font-weight: 900; margin-bottom: 25px; border-bottom: 1px solid rgba(255,255,255,0.07); padding-bottom: 15px; }
-        .full-audit-display ul { list-style: none; }
-        .full-audit-display ul li { padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.04); color: #b8bcca; font-size: 1.08rem; display: flex; align-items: center; gap: 14px; }
-        
-        @media (min-width: 750px) { .room-interface { flex-direction: row; gap: 90px; } .vault-carousel-box { height: 290px; } }
+        .nav-logo { font-size: 1.3rem; font-weight: 800; letter-spacing: -0.5px; display: flex; align-items: center; gap: 10px; }
+        .nav-links { display: none; gap: 30px; list-style: none; }
+        @media(min-width: 900px) { .nav-links { display: flex; } }
+        .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.95rem; font-weight: 600; transition: color 0.2s; }
+        .nav-links a:hover { color: var(--text-light); }
+        .nav-btn-right { background: var(--primary-blue); color: #ffffff; padding: 10px 24px; border-radius: 20px; text-decoration: none; font-weight: 700; font-size: 0.9rem; box-shadow: 0 4px 15px rgba(0, 122, 255, 0.3); transition: transform 0.2s; border: none; cursor: pointer; }
+        .nav-btn-right:hover { transform: translateY(-2px); }
     </style>
 </head>
+    <style>
+        .hero-scenery-container {
+            margin-top: 140px;
+            width: 100%;
+            max-width: 900px;
+            padding: 40px 20px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 10;
+        }
+        .logo-box-morbido {
+            width: 160px;
+            height: 160px;
+            background: linear-gradient(135deg, #111a36 0%, #090e1e 100%);
+            border: var(--plastic-border);
+            border-radius: 38px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5), inset 0 2px 4px rgba(255,255,255,0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 45px;
+            position: relative;
+        }
+        .logo-box-morbido::after {
+            content: ''; position: absolute; width: 100%; height: 100%; top: 0; left: 0;
+            border-radius: 38px; box-shadow: 0 0 35px rgba(0, 122, 255, 0.25); pointer-events: none;
+        }
+        .logo-icon-svg { width: 80px; height: 80px; filter: drop-shadow(0 0 15px var(--primary-blue)); }
+        .hero-scenery-container h2 { font-size: 3.8rem; font-weight: 900; letter-spacing: -1px; margin-bottom: 25px; background: linear-gradient(180deg, #ffffff 0%, #e2e8f0 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero-scenery-container p { font-size: 1.2rem; color: var(--text-muted); max-width: 680px; line-height: 1.7; margin-bottom: 45px; }
+        .action-flex-box { display: flex; flex-direction: column; gap: 20px; width: 100%; max-width: 580px; justify-content: center; margin-bottom: 35px; }
+        @media(min-width: 600px) { .action-flex-box { flex-direction: row; } }
+        .btn-action-plastic { flex: 1; padding: 18px 30px; font-size: 1.05rem; font-weight: 700; border-radius: 18px; border: var(--plastic-border); color: #ffffff; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 12px; transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1); text-decoration: none; box-shadow: var(--fluid-shadow); }
+        .btn-blue-core { background: linear-gradient(135deg, rgba(0,122,255,0.1) 0%, rgba(0,122,255,0.25) 100%); border-color: rgba(0,122,255,0.4); }
+        .btn-blue-core:hover { border-color: var(--primary-blue); box-shadow: 0 0 30px rgba(0,122,255,0.35); transform: translateY(-3px); }
+        .btn-purple-security { background: linear-gradient(135deg, rgba(155,93,229,0.1) 0%, rgba(155,93,229,0.25) 100%); border-color: rgba(155,93,229,0.4); }
+        .btn-purple-security:hover { border-color: var(--vip-purple); box-shadow: 0 0 30px rgba(155,93,229,0.35); transform: translateY(-3px); }
+        .btn-inspiration-small { background: rgba(255, 255, 255, 0.02); border-color: rgba(255, 255, 255, 0.08); font-size: 0.85rem; padding: 12px 24px; border-radius: 12px; color: var(--text-muted); cursor: pointer; transition: all 0.2s; max-width: 240px; font-weight: 600; }
+        .btn-inspiration-small:hover { border-color: rgba(255, 255, 255, 0.2); color: #ffffff; background: rgba(255,255,255,0.05); }
+        .polaris-footer-section { width: 100%; max-width: 850px; margin: 90px auto 60px auto; padding: 50px 40px; background: rgba(255, 255, 255, 0.01); backdrop-filter: blur(20px); border-radius: 28px; border: var(--plastic-border); box-shadow: var(--fluid-shadow); text-align: center; z-index: 10; }
+        .polaris-footer-section h3 { font-size: 2.1rem; font-weight: 800; margin-bottom: 15px; color: #ffffff; }
+        .polaris-footer-section p { font-size: 1.1rem; color: var(--text-muted); line-height: 1.6; max-width: 650px; margin: 0 auto 35px auto; }
+        .modal-overlay-lucid { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(3, 5, 12, 0.8); backdrop-filter: blur(12px); display: none; justify-content: center; align-items: center; z-index: 200; opacity: 0; transition: opacity 0.4s ease; }
+        .modal-overlay-lucid.active { display: flex; opacity: 1; }
+        .modal-box-lucid { background: rgba(255, 255, 255, 0.04); border: var(--plastic-border); box-shadow: 0 30px 70px rgba(0,0,0,0.7); max-width: 440px; width: 100%; padding: 40px; border-radius: var(--morbido-radius); text-align: center; transform: scale(0.9); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; }
+        .modal-overlay-lucid.active .modal-box-lucid { transform: scale(1); }
+        .modal-choice-btn { display: block; width: 100%; padding: 16px; margin-bottom: 15px; border-radius: 14px; text-decoration: none; font-weight: 700; font-size: 1.05rem; transition: all 0.2s; border: var(--plastic-border); text-align: center; }
+        .btn-choice-app { background: #5865F2; color: #ffffff; border-color: rgba(255,255,255,0.1); }
+        .btn-choice-app:hover { background: #4752c4; transform: translateY(-2px); }
+        .btn-choice-web { background: rgba(255,255,255,0.05); color: #ffffff; }
+        .btn-choice-web:hover { background: rgba(255,255,255,0.12); transform: translateY(-2px); }
+        .btn-modal-close { position: absolute; top: 16px; right: 20px; font-size: 1.5rem; font-weight: 700; color: var(--text-muted); background: none; border: none; cursor: pointer; transition: color 0.2s; }
+        .btn-modal-close:hover { color: #ff4d4d; }
+    </style>
 <body>
-    <!-- ATTO 1: INGRESSO UNIVERSITÀ -->
-    <section class="uni-gate-scene" id="entranceAct">
-        <div class="cinema-frame">
-            <div class="gate-left"><div class="brass-handle"></div></div>
-            <div class="gate-right"><div class="brass-handle"></div></div>
+    <canvas id="spaceCanvas"></canvas>
+
+    <nav class="navbar-lucid">
+        <div class="nav-logo">🌌 Polaris Studios</div>
+        <ul class="nav-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Bot</a></li>
+            <li><a href="#">Funzioni</a></li>
+            <li><a href="#">Comandi</a></li>
+            <li><a href="#">Invita</a></li>
+            <li><a href="#">Discord</a></li>
+        </ul>
+        <button class="nav-btn-right" onclick="openRoutingModal('bot')">Invita i bot</button>
+    </nav>
+
+    <main class="hero-scenery-container">
+        <div class="logo-box-morbido">
+            <svg class="logo-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke-linecap="round" stroke-linejoin="round" fill="rgba(0,122,255,0.1)"/>
+            </svg>
         </div>
-        <div class="wavy-title">
-            <h1>Staff Academy Control</h1>
-            <p>Benvenuto nell'infrastruttura d'élite dell'università virtuale. Il satellite di sicurezza è attivo nel cloud su Render, pronto ad addestrare l'organico amministrativo e proteggere la struttura da attacchi Nuke esterni.</p>
-            <button class="plastic-glass-btn btn-purple" onclick="triggerAcademyEntrance()" style="max-width: 300px; margin: 0 auto; cursor: pointer;">Spalanca i Portoni ed Entra</button>
+        <h2>Polaris Studios</h2>
+        <p>Due bot Discord per il tuo server: **Polaris Core** per gestire ticket, backup, giveaway e ruoli, **Polaris Security** per proteggerlo da nuke, raid e spam.</p>
+
+        <div class="action-flex-box">
+            <button class="btn-action-plastic btn-blue-core" onclick="openRoutingModal('bot')">
+                <span>🤖</span> Aggiungi Polaris Core
+            </button>
+            <button class="btn-action-plastic btn-purple-security" onclick="openRoutingModal('server')">
+                <span>🛡️</span> Aggiungi Polaris Security
+            </button>
         </div>
+
+        <button class="btn-inspiration-small" onclick="scrollToInspiration()">
+            ✨ La nostra ispirazione
+        </button>
+    </main>
+
+    <section class="polaris-footer-section" id="polarisDedicatedArea">
+        <h3>🌌 Ringraziamenti Speciali</h3>
+        <p>Un ringraziamento profondo e speciale a Polaris Studios per aver ispirato lo sbarramento balistico e lo sviluppo della nostra infrastruttura di sicurezza. Siete l'eccellenza dello sviluppo cloud.</p>
+        <button class="glass-luxury-btn btn-discord-invite" onclick="openRoutingModal('inspiration')" style="width: 100%; max-width: 380px; margin: 0 auto; display: block; border-radius: 18px; padding: 20px; font-weight: 800; font-size: 1.1rem; background: rgba(255,255,255,0.03); border: var(--plastic-border); cursor: pointer; box-shadow: var(--fluid-shadow);">
+            🪐 Entra nel Server di Polaris
+        </button>
     </section>
 
-    <!-- ATTO 2: AULA UNIVERSITARIA CON LAVAGNA E PAVIMENTO RIFLETTENTE -->
-    <section class="uni-classroom" id="classroomAct">
-        <div class="real-board">
-            <h2># FILTRO_AUDIT_SATELLITE_LOG</h2>
-            <p>> Connessione con il database SQLite3 `academy.db` stabilita con successo...</p>
-            <p>> Monitoraggio attivo in background dell'organico tramite 9 moduli radar d'intelligence:</p>
-            <ul>
-                <li>• Moduli 1-2: Scansione registri audit di gilda e analisi attività reclute.</li>
-                <li>• Moduli 3-4: Centro Sanzioni /mod per tracciamento strike, mute, kick e ban.</li>
-                <li>• Moduli 5-7: Radar anti-flood di sbarramento e protezione anti-link passiva.</li>
-                <li>• Modulo 8: Forensic Audit Containment (Isolamento account malevoli d'urgenza).</li>
-                <li>• Modulo 9: VIP Purge Protocol (Estirpazione bot spia non autorizzati).</li>
-            </ul>
+    <div class="modal-overlay-lucid" id="routingModal">
+        <div class="modal-box-lucid">
+            <button class="btn-modal-close" onclick="closeRoutingModal()">×</button>
+            <h3 id="modalTitle">Gateway d'Instradamento</h3>
+            <p id="modalDesc">Seleziona come desideri aprire l'interfaccia di autorizzazione per il bot selezionato.</p>
+            <a href="#" id="appRedirectLink" class="modal-choice-btn btn-choice-app" onclick="closeRoutingModal()">Apri nell'Applicazione</a>
+            <a href="#" id="webRedirectLink" target="_blank" class="modal-choice-btn btn-choice-web" onclick="closeRoutingModal()">Apri nel Browser</a>
         </div>
-        <div class="room-interface">
-            <div class="btn-holder">
-                <a href="https://discord.com" class="plastic-glass-btn btn-purple" onclick="playClickSound()">Ancorati ed Invita il Bot</a>
-                <a href="https://discord.com" class="plastic-glass-btn btn-white" onclick="playClickSound()">Accreditati ed Entra nel Server</a>
-            </div>
-            <div class="pillar-scenery">
-                <button class="epic-gold-btn" onclick="triggerVaultDescent()">Scendi nel Caveau</button>
-                <div class="greek-marble-column"></div>
-            </div>
-        </div>
-        <div class="mirror-floor"></div>
-    </section>
-
-    <!-- SCENOGRAFIA INTERMEDIA: CINEMATICA DELLA DISCESA NELLO SCAVO -->
-    <section class="geological-shaft" id="shaftTunnel">
-        <div class="earth-texture"></div>
-        <div class="heavy-pipe pipe-l"><div class="hydraulic-valve"></div></div>
-        <div class="heavy-pipe pipe-r"></div>
-    </section>
-
-    <!-- ATTO 3: CAVEAU REALE CON LINGOTTI E ROTAZIONE AUTOMATICA -->
-    <section class="epic-vault-room" id="vaultAct">
-        <h2>🔒 IL CAVEAU DELLE LICENZE SATELLITE</h2>
-        <div class="treasure-floor">
-            <div class="gold-ingot-3d"></div><div class="gold-ingot-3d"></div>
-            <div class="gold-ingot-3d"></div><div class="gold-ingot-3d"></div>
-        </div>
-        <div class="vault-carousel-box">
-            <div class="vault-item-card vc-base active">
-                <h4>Piano Base</h4><div class="v-price-text">€0 / Gratuito</div><p>Esercitazioni teoriche d'organico con Quiz standard...</p>
-                <button class="btn-open-inspect" onclick="revealVaultPlan('base')">Ispeziona Specifiche</button>
-            </div>
-            <div class="vault-item-card vc-premium">
-                <h4>Piano Premium</h4><div class="v-price-text">€4.99 / mese</div><p>Centro Sanzioni /mod, tasti /toggle e aule ticket...</p>
-                <button class="btn-open-inspect" onclick="revealVaultPlan('premium')">Ispeziona Specifiche</button>
-            </div>
-            <div class="vault-item-card vc-deluxe">
-                <h4>Piano Deluxe</h4><div class="v-price-text">€9.99 / mese</div><p>Intelligence passiva 5-7 e Avatar Capture grafico...</p>
-                <button class="btn-open-inspect" onclick="revealVaultPlan('deluxe')">Ispeziona Specifiche</button>
-            </div>
-            <div class="vault-item-card vc-vip">
-                <h4>Piano VIP</h4><div class="v-price-text">€19.99 / mese</div><p>VIP Purge, Blacklist permanente e 15 scenari casuali...</p>
-                <button class="btn-open-inspect" onclick="revealVaultPlan('vip')">Ispeziona Specifiche</button>
-            </div>
-        </div>
-        <div class="full-audit-display" id="inspectionCard">
-            <h3 id="inspectTitle">Seleziona Licenza</h3>
-            <div class="audit-price" id="inspectPrice">-</div>
-            <p id="inspectDesc">-</p>
-            <ul id="inspectSpecs"></ul>
-        </div>
-    </section>
-
+    </div>
     <script>
+        const canvas = document.getElementById('spaceCanvas');
+        const ctx = canvas.getContext('2d');
+        let stars = [];
+        const numStars = 60;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            initStars();
+        }
+
+        function initStars() {
+            stars = [];
+            for (let i = 0; i < numStars; i++) {
+                stars.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    size: Math.random() * 2 + 0.5,
+                    opacity: Math.random(),
+                    speed: Math.random() * 0.02 + 0.005
+                });
+            }
+        }
+
+        function animateSpace() {
+            ctx.fillStyle = '#070b19';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            stars.forEach(s => {
+                s.opacity += s.speed;
+                if (s.opacity > 1 || s.opacity < 0) s.speed *= -1;
+                ctx.fillStyle = `rgba(255, 255, 255, ${Math.abs(s.opacity)})`;
+                ctx.beginPath(); ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2); ctx.fill();
+            });
+            requestAnimationFrame(animateSpace);
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+        animateSpace();
+
         let audioCtx = null;
         function playClickSound() {
-            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            let osc = audioCtx.createOscillator(), gain = audioCtx.createGain();
-            osc.type = 'triangle'; osc.frequency.setValueAtTime(140, audioCtx.currentTime);
-            osc.frequency.exponentialRampToValueAtTime(40, audioCtx.currentTime + 0.05);
-            gain.gain.setValueAtTime(0.15, audioCtx.currentTime); gain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.05);
-            osc.connect(gain); gain.connect(audioCtx.destination); osc.start(); osc.stop(audioCtx.currentTime + 0.05);
+            try {
+                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                let osc = audioCtx.createOscillator(), gain = audioCtx.createGain();
+                osc.type = 'triangle'; osc.frequency.setValueAtTime(155, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(45, audioCtx.currentTime + 0.05);
+                gain.gain.setValueAtTime(0.12, audioCtx.currentTime); gain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.05);
+                osc.connect(gain); gain.connect(audioCtx.destination); osc.start(); osc.stop(audioCtx.currentTime + 0.05);
+            } catch(e) {}
         }
-        function triggerAcademyEntrance() {
-            playClickSound(); document.getElementById('entranceAct').classList.add('open');
-            setTimeout(() => {
-                document.getElementById('entranceAct').style.display = 'none';
-                document.getElementById('classroomAct').style.display = 'block';
-                setTimeout(() => { document.getElementById('classroomAct').classList.add('visible'); }, 50);
-            }, 2000);
-        }
-        function triggerVaultDescent() {
+
+        function scrollToInspiration() {
             playClickSound();
-            let tunnel = document.getElementById('shaftTunnel'); tunnel.style.display = 'block';
-            window.scrollTo({ top: tunnel.offsetTop, behavior: 'smooth' });
-            setTimeout(() => {
-                let vault = document.getElementById('vaultAct'); vault.style.display = 'block';
-                window.scrollTo({ top: vault.offsetTop, behavior: 'smooth' });
-                setTimeout(() => { vault.classList.add('visible'); startCarouselRotation(); }, 600);
-            }, 1400);
+            document.getElementById('polarisDedicatedArea').scrollIntoView({ behavior: 'smooth' });
         }
-        let currentIndex = 0; let rotationInterval = null;
-        function startCarouselRotation() {
-            if (rotationInterval) return;
-            const items = document.querySelectorAll('.vault-item-card');
-            rotationInterval = setInterval(() => {
-                items[currentIndex].classList.remove('active');
-                currentIndex = (currentIndex + 1) % items.length;
-                items[currentIndex].classList.add('active');
-            }, 3000);
+
+        const oauthUrl = "https://discord.com";
+        const serverUrl = "https://discord.gg";
+        const inspirationUrl = "https://discord.gg";
+
+        function openRoutingModal(type) {
+            playClickSound();
+            const modal = document.getElementById('routingModal');
+            const title = document.getElementById('modalTitle');
+            const desc = document.getElementById('modalDesc');
+            const appLink = document.getElementById('appRedirectLink');
+            const webLink = document.getElementById('webRedirectLink');
+
+            if (type === 'bot') {
+                title.innerText = "🤖 Aggiungi Polaris Core";
+                desc.innerText = "Scegli se configurare il modulo Core all'interno dell'applicazione desktop nativa o via browser.";
+                appLink.href = "discord://-/oauth2/authorize?client_id=1570797501894762586&permissions=8&integration_type=0&scope=bot";
+                webLink.href = oauthUrl;
+            } else if (type === 'server') {
+                title.innerText = "🛡️ Aggiungi Polaris Security";
+                desc.innerText = "Attiva le barriere balistiche di sbarramento all'interno dell'applicazione nativa o via browser.";
+                appLink.href = "discord://discord.gg/2DMQtVxW";
+                webLink.href = serverUrl;
+            } else {
+                title.innerText = "✨ Polaris Studios Server";
+                desc.innerText = "Accedi direttamente alla community e al quartier generale ufficiale di Polaris Studios.";
+                appLink.href = "discord://discord.gg/EKkTZtKsk";
+                webLink.href = inspirationUrl;
+            }
+
+            modal.style.display = "flex";
+            setTimeout(() => { modal.classList.add('active'); }, 15);
         }
-        const planSpecs = {
-            base: { t: "Licenza Base Teorica", p: "€0.00 / Gratuito", d: "Modulo standard d'ingresso accademico per lo studio teorico dei comandi.", s: ["• Pool Quiz Base (5 domande casuali)", "• Creazione aule esame private volatili", "• Ispezioni radar log standard", "• Sincronizzazione database locale"] },
-            premium: { t: "Licenza Premium Operativa", p: "€4.99 / Mensile", d: "Sblocca l'apparato sanzionatorio ed esecutivo centralizzato per la moderazione.", s: ["• Centro Sanzioni /mod attivo (Strike, Ban, Mute, Kick)", "• Pannello interruttori /toggle con risposte Verde/Rosso", "• Allocazione Ticket provini tramite bottone", "• Tasti Reclama Ticket e Chiama Admin nelle aule"] },
-            deluxe: { t: "Licenza Deluxe Intelligence", p: "€9.99 / Mensile", d: "Espansione totale dei moduli radar di sorveglianza e dell'estetica di gilda.", s: ["• Attivazione Moduli d'Intelligence passivi 5, 6 e 7", "• Caricamento grafico con cattura dell'Avatar in ingresso", "• Sblocco del Quiz Pool Avanzato (8 varianti casuali)", "• Registro Audit isolato e log automatici potenziati"] },
-            vip: { t: "Licenza VIP Forensic Shield", p: "€19.99 / Mensile", d: "Massimo grado di sbarramento nucleare, bonifica fedine ed estirpazione minacce.", s: ["• Modulo 8: Forensic Audit Containment (Isolamento violazioni)", "• Modulo 9: VIP Purge Protocol (Scansione per estirpare bot spia)", "• Registro Blacklist permanente e Pardon Globale distrettuale", "• Pool Scenari d'emergenza ed urgenza ampliato a 15 varianti casuali"] }
-        };
-        function revealVaultPlan(planKey) {
-            playClickSound(); clearInterval(rotationInterval); rotationInterval = null; const data = planSpecs[planKey];
-            document.getElementById('inspectTitle').innerText = data.t;
-            document.getElementById('inspectTitle').style.color = planKey === 'base' ? '#f8f9fa' : `var(--${planKey})`;
-            document.getElementById('inspectPrice').innerText = data.p;
-            document.getElementById('inspectPrice').style.color = planKey === 'base' ? '#f8f9fa' : `var(--${planKey})`;
-            document.getElementById('inspectDesc').innerText = data.d;
-            const specsUl = document.getElementById('inspectSpecs'); specsUl.innerHTML = '';
-            data.s.forEach(spec => { let li = document.createElement('li'); li.innerText = spec; specsUl.appendChild(li); });
-            document.getElementById('inspectionCard').style.display = 'block';
+
+        function closeRoutingModal() {
+            playClickSound();
+            const modal = document.getElementById('routingModal');
+            modal.classList.remove('active');
+            setTimeout(() => { modal.style.display = "none"; }, 400);
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('routingModal');
+            if (event.target === modal) { closeRoutingModal(); }
         }
     </script>
 </body>
 </html>
-
