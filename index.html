@@ -3,147 +3,172 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Staff Academy - Control Satellite</title>
+    <title>Staff Academy - Università Virtuale & Caveau</title>
     <style>
         :root {
-            --bg-dark: #060713; --panel-bg: #0d0e22; --nested: #141632;
+            --bg-dark: #04050f; --panel-glass: rgba(17, 19, 36, 0.75);
             --primary: #5865F2; --premium: #007aff; --deluxe: #f1c40f; --vip: #9b5de5;
-            --text-main: #f8f9fa; --text-muted: #7d8396;
+            --text-main: #f8f9fa; --text-muted: #8a8f98;
+            --glass-border: 1px solid rgba(255, 255, 255, 0.12);
+            --plastic-shadow: 0 15px 35px rgba(0,0,0,0.6), inset 0 1px 1px rgba(255,255,255,0.2);
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-        body { background: var(--bg-dark); color: var(--text-main); overflow-x: hidden; scroll-behavior: smooth; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, sans-serif; }
+        body { background: var(--bg-dark); color: var(--text-main); overflow-x: hidden; }
         
-        /* ATTO 1: INGRESSO UNIVERSITA */
-        .university-entrance {
+        /* SCENOGRAFIA 1: INGRESSO UNIVERSITÀ */
+        .u-entrance {
             position: relative; min-height: 100vh; width: 100vw; display: flex; flex-direction: column;
-            justify-content: center; align-items: center; text-align: center; padding: 20px;
-            background: linear-gradient(to bottom, #090a1f, #060713); overflow: hidden; perspective: 1200px;
+            justify-content: center; align-items: center; text-align: center; overflow: hidden; perspective: 1500px;
+            background: linear-gradient(to bottom, #0c0d24, #04050f);
         }
-        .wavy-welcome {
-            animation: lightOndulation 4s ease-in-out infinite alternate; max-width: 700px; z-index: 10;
-        }
-        @keyframes lightOndulation {
-            0% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-8px) rotate(0.5deg); }
-            100% { transform: translateY(4px) rotate(-0.5deg); }
-        }
-        .wavy-welcome h1 { font-size: 3rem; font-weight: 900; margin-bottom: 20px; background: linear-gradient(45deg, var(--primary), var(--premium)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .wavy-welcome p { color: var(--text-main); font-size: 1.15rem; line-height: 1.7; margin-bottom: 35px; }
+        .wavy-title { animation: floatWelcome 5s ease-in-out infinite alternate; z-index: 10; padding: 20px; }
+        @keyframes floatWelcome { 0% { transform: translateY(0) rotate(0deg); } 100% { transform: translateY(-10px) rotate(0.5deg); } }
+        .wavy-title h1 { font-size: 3.2rem; font-weight: 900; margin-bottom: 20px; background: linear-gradient(45deg, var(--primary), var(--vip)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .wavy-title p { color: var(--text-main); font-size: 1.2rem; max-width: 700px; line-height: 1.7; margin-bottom: 30px; }
         
-        /* LE PORTE 3D */
-        .door-frame {
-            position: absolute; width: 100%; height: 100%; top: 0; left: 0; display: flex; z-index: 5; pointer-events: none;
+        /* GRANDI PORTE 3D */
+        .gate-frame { position: absolute; width: 100%; height: 100%; top: 0; left: 0; display: flex; z-index: 5; pointer-events: none; }
+        .door-left, .door-right {
+            width: 50%; height: 100%; background: #13152c; border: 5px solid var(--primary);
+            box-shadow: inset 0 0 100px rgba(0,0,0,0.9); transition: transform 1.8s cubic-bezier(0.77, 0, 0.175, 1);
         }
-        .left-door, .right-door {
-            width: 50%; height: 100%; background: #111328; border: 4px solid var(--primary);
-            box-shadow: inset 0 0 50px rgba(0,0,0,0.8); transition: transform 1.5s cubic-bezier(0.77, 0, 0.175, 1);
-            position: relative; display: flex; align-items: center; justify-content: center;
-        }
-        .left-door { transform-origin: left center; border-right: 2px solid var(--primary); }
-        .right-door { transform-origin: right center; border-left: 2px solid var(--primary); }
-        .door-handle { width: 30px; height: 30px; background: var(--deluxe); border-radius: 50%; box-shadow: 0 0 15px var(--deluxe); }
-        
-        .university-entrance.open .left-door { transform: rotateY(-95deg); }
-        .university-entrance.open .right-door { transform: rotateY(95deg); }
-        .university-entrance.open .wavy-welcome { opacity: 0; pointer-events: none; transition: opacity 0.5s; }
+        .door-left { transform-origin: left center; border-right: 2px solid var(--primary); }
+        .door-right { transform-origin: right center; border-left: 2px solid var(--primary); }
+        .u-entrance.open .door-left { transform: rotateY(-100deg); }
+        .u-entrance.open .door-right { transform: rotateY(100deg); }
+        .u-entrance.open .wavy-title { opacity: 0; pointer-events: none; transition: opacity 0.5s; }
 
-        /* ATTO 2: L'AULA CON LA LAVAGNA */
-        .classroom-section {
+        /* SCENOGRAFIA 2: AULA CON LAVAGNA TRASPARENTE (PLASTIC GLASS) */
+        .u-classroom {
             display: none; min-height: 100vh; width: 100vw; padding: 60px 20px; opacity: 0; transition: opacity 1s;
-            background: radial-gradient(circle at center, #101230 0%, #060713 100%); text-align: center;
+            background: radial-gradient(circle at center, #0f112c 0%, #04050f 100%); text-align: center;
         }
-        .classroom-section.visible { display: block; opacity: 1; }
-        .blackboard {
-            background: #141e18; border: 15px solid #4a2f13; border-radius: 8px; max-width: 900px; margin: 0 auto 50px auto;
-            padding: 40px; box-shadow: 0 20px 50px rgba(0,0,0,0.7), inset 0 0 40px rgba(0,0,0,0.6); text-align: left;
-            border-style: ridge;
+        .u-classroom.visible { display: block; opacity: 1; }
+        .glass-board {
+            background: var(--panel-glass); backdrop-filter: blur(15px); border-radius: 24px; border: var(--glass-border);
+            max-width: 900px; margin: 0 auto 50px auto; padding: 40px; box-shadow: var(--plastic-shadow); text-align: left;
         }
-        .blackboard h2 { font-family: 'Courier New', monospace; color: #f8f9fa; font-size: 2.2rem; margin-bottom: 25px; border-bottom: 2px dashed rgba(255,255,255,0.2); padding-bottom: 10px; }
-        .blackboard p, .blackboard li { font-family: 'Courier New', monospace; color: #e9ecef; font-size: 1.05rem; line-height: 1.8; margin-bottom: 15px; }
-        .blackboard ul { margin-left: 25px; }
+        .glass-board h2 { font-size: 2rem; color: var(--primary); margin-bottom: 20px; font-weight: 800; }
+        .glass-board p, .glass-board li { color: #e2e4eb; font-size: 1.05rem; line-height: 1.8; margin-bottom: 12px; }
+        .glass-board ul { margin-left: 25px; }
 
-        /* INTERFACCIA PULSANTI E PIEDISTALLO GRECO */
-        .classroom-interface { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 40px; max-width: 1000px; margin: 0 auto; }
-        .standard-btns { display: flex; flex-direction: column; gap: 20px; width: 100%; max-width: 400px; }
-        .action-btn { display: block; width: 100%; padding: 20px; font-size: 1.1rem; font-weight: 700; text-align: center; color: white; text-decoration: none; border-radius: 15px; box-shadow: 0 10px 20px rgba(0,0,0,0.4); transition: transform 0.2s; }
-        .action-btn:hover { transform: translateY(-3px); filter: brightness(1.1); }
-        .btn-invite { background: var(--primary); } .btn-join { background: #23272a; border: 1px solid rgba(255,255,255,0.1); }
-        /* PIEDISTALLO STILE GRECO */
-        .pedestal-container { position: relative; width: 220px; height: 260px; display: flex; flex-direction: column; align-items: center; margin-top: 20px; }
-        .floating-gold-btn {
-            position: absolute; top: -30px; padding: 16px 25px; font-size: 1rem; font-weight: 800; color: #060713;
-            background: linear-gradient(135deg, #ffe066 0%, var(--deluxe) 50%, #b89200 100%);
-            border: none; border-radius: 12px; cursor: pointer; text-decoration: none; text-align: center;
-            box-shadow: 0 0 30px var(--deluxe), inset 0 1px 0 rgba(255,255,255,0.4);
-            animation: goldFloat 3s ease-in-out infinite; z-index: 15;
-        }
-        @keyframes goldFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
-        .greek-pedestal {
-            width: 120px; height: 180px; background: #e0e0e6; margin-top: 40px;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.5), inset 0 20px 20px #ffffff, inset 0 -20px 20px #90909a;
-            border-left: 10px solid #d5d5dd; border-right: 10px solid #c5c5cf; position: relative;
-        }
-        .greek-pedestal::before { content: ''; position: absolute; top: -15px; left: -20px; width: 160px; height: 15px; background: #eaeaea; box-shadow: 0 5px 10px rgba(0,0,0,0.3); border-radius: 4px; }
-        .greek-pedestal::after { content: ''; position: absolute; bottom: -20px; left: -20px; width: 160px; height: 20px; background: #bcbcda; border-radius: 4px; }
+        .class-interface { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 40px; }
+        .btn-stack { display: flex; flex-direction: column; gap: 20px; width: 100%; max-width: 400px; }
+        .glass-btn { display: block; width: 100%; padding: 20px; font-size: 1.1rem; font-weight: 700; text-align: center; color: white; text-decoration: none; border-radius: 16px; background: var(--panel-glass); backdrop-filter: blur(10px); border: var(--glass-border); box-shadow: var(--plastic-shadow); transition: transform 0.2s, box-shadow 0.2s; }
+        .glass-btn:hover { transform: translateY(-3px); box-shadow: 0 20px 40px rgba(88,101,242,0.2); }
+        .btn-inv { border-color: var(--primary); color: var(--primary); } .btn-srv { border-color: #ffffff; }
 
-        /* ATTO 3: CAVEAU SOTTERRANEO */
-        .caveau-section {
+        /* PIEDISTALLO MARMO GRECO CON PULSANTE FLUTTUANTE ORO */
+        .pedestal-wrapper { position: relative; width: 240px; height: 280px; display: flex; flex-direction: column; align-items: center; }
+        .gold-floating-btn {
+            position: absolute; top: -20px; padding: 16px 30px; font-size: 1.05rem; font-weight: 800; color: #04050f;
+            background: linear-gradient(135deg, #fff099 0%, var(--deluxe) 50%, #997500 100%);
+            border: none; border-radius: 14px; cursor: pointer; box-shadow: 0 0 35px var(--deluxe), inset 0 1px 0 rgba(255,255,255,0.5);
+            animation: buttonFloat 3.5s ease-in-out infinite; z-index: 20;
+        }
+        @keyframes buttonFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-18px); } }
+        .marble-pillar {
+            width: 130px; height: 190px; background: linear-gradient(90deg, #e3e3e9 0%, #f4f4f9 50%, #dcdce2 100%); margin-top: 40px;
+            border-radius: 4px; box-shadow: 0 20px 40px rgba(0,0,0,0.6), inset 15px 0 20px #ffffff, inset -15px 0 20px #b0b0ba; position: relative;
+        }
+        .marble-pillar::before { content: ''; position: absolute; top: -15px; left: -25px; width: 180px; height: 15px; background: #f0f0f5; box-shadow: 0 6px 12px rgba(0,0,0,0.4); border-radius: 6px; }
+        .marble-pillar::after { content: ''; position: absolute; bottom: -20px; left: -25px; width: 180px; height: 20px; background: #c8c8d2; border-radius: 6px; }
+        /* SCENOGRAFIA 3: LA LUNGA DISCESA SOTTERRANEA (TUNNEL) */
+        .shaft-tunnel {
+            display: none; width: 100vw; height: 180vh; position: relative;
+            background: linear-gradient(to bottom, #04050f 0%, #1a1105 30%, #2c1a08 60%, #0a0b16 100%);
+            overflow: hidden; box-shadow: inset 0 50px 100px #04050f, inset 0 -50px 100px #0a0b16;
+        }
+        .shaft-tunnel.visible { display: block; }
+        .dirt-layer {
+            position: absolute; width: 100%; height: 100%; top: 0; left: 0;
+            background-image: radial-gradient(rgba(0,0,0,0.4) 20%, transparent 20%),
+                              radial-gradient(rgba(0,0,0,0.4) 20%, transparent 20%);
+            background-size: 40px 40px; background-position: 0 0, 20px 20px; opacity: 0.15;
+        }
+        .industrial-pipe {
+            position: absolute; width: 40px; height: 100%; background: linear-gradient(90deg, #2b2e3a 0%, #525866 50%, #1c1e24 100%);
+            border-left: 2px solid rgba(255,255,255,0.1); border-right: 2px solid #000; box-shadow: 20px 0 40px rgba(0,0,0,0.6);
+        }
+        .pipe-left { left: 8%; } .pipe-right { right: 8%; width: 25px; }
+        .pipe-valve {
+            position: absolute; width: 70px; height: 30px; background: #992222; left: -15px; top: 25%;
+            border-radius: 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+
+        /* SCENOGRAFIA 4: IL CAVEAU REALE CON LINGOTTI E MONETE */
+        .u-vault {
             display: none; min-height: 100vh; width: 100vw; padding: 80px 20px; opacity: 0; transition: opacity 1s;
-            background: linear-gradient(to bottom, #05050f, #020207); text-align: center;
+            background: radial-gradient(circle at center, #111535 0%, #03040a 100%); text-align: center; position: relative;
         }
-        .caveau-section.visible { display: block; opacity: 1; }
-        .caveau-section h2 { font-size: 2.5rem; margin-bottom: 50px; font-weight: 800; background: linear-gradient(45deg, #ffffff, var(--text-muted)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .u-vault.visible { display: block; opacity: 1; }
+        .u-vault h2 { font-size: 2.6rem; font-weight: 900; margin-bottom: 60px; background: linear-gradient(45deg, #ffffff, #ffd700); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 0 30px rgba(255,215,0,0.2); }
         
-        .vault-grid { display: grid; grid-template-columns: 1fr; gap: 25px; max-width: 1000px; margin: 0 auto 60px auto; }
-        .vault-card {
-            background: #090a18; padding: 35px 20px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.04);
-            cursor: pointer; transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+        /* MONETE E LINGOTTI GRAFICI (CSS 3D PLASTIC GLASS) */
+        .gold-pile {
+            margin: 0 auto 40px auto; max-width: 600px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; pointer-events: none;
         }
-        .vault-card h4 { font-size: 1.5rem; margin-bottom: 8px; font-weight: 700; }
-        .vault-card .v-price { font-size: 1.2rem; font-weight: 800; margin-bottom: 12px; }
-        .vault-card p { font-size: 0.9rem; color: var(--text-muted); }
-        
-        /* LUCI EMISSIONE DELLE SCHEDE AL PASSAGGIO/CLICK */
-        .v-base h4 { color: var(--text-main); } .v-base:hover { box-shadow: 0 0 35px rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.2); }
-        .v-premium h4, .v-premium .v-price { color: var(--premium); } .v-premium:hover { box-shadow: 0 0 35px rgba(0,122,255,0.3); border-color: var(--premium); }
-        .v-deluxe h4, .v-deluxe .v-price { color: var(--deluxe); } .v-deluxe:hover { box-shadow: 0 0 35px rgba(241,196,15,0.3); border-color: var(--deluxe); }
-        .v-vip h4, .v-vip .v-price { color: var(--vip); } .v-vip:hover { box-shadow: 0 0 35px rgba(155,93,229,0.3); border-color: var(--vip); }
+        .gold-bar {
+            width: 100px; height: 35px; background: linear-gradient(135deg, #fff3a8 0%, #ffd700 40%, #b89200 100%);
+            border-radius: 3px; box-shadow: 0 10px 20px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.4);
+            transform: skewX(-10deg); position: relative;
+        }
+        .gold-bar::before { content: 'GOLD'; position: absolute; font-size: 0.55rem; font-weight: 900; color: rgba(0,0,0,0.3); top: 10px; left: 25px; letter-spacing: 2px; }
 
-        /* DETTAGLI DEL PIANO IN BASSO */
-        .vault-details-display {
-            display: none; background: var(--panel-bg); max-width: 800px; margin: 0 auto; padding: 40px 30px;
-            border-radius: 24px; border: 1px solid rgba(255,255,255,0.06); text-align: left;
-            box-shadow: inset 0 2px 10px rgba(0,0,0,0.6), 0 20px 40px rgba(0,0,0,0.5); animation: cardReveal 0.5s ease-out;
+        /* CAROSELLO ROTANTE 3D (OGNI 3 SECONDI) */
+        .carousel-view { position: relative; max-width: 500px; height: 260px; margin: 0 auto 50px auto; perspective: 1000px; }
+        .carousel-item-wrap {
+            position: absolute; width: 100%; height: 100%; top: 0; left: 0; display: none;
+            background: var(--panel-glass); backdrop-filter: blur(20px); border-radius: 24px; border: var(--glass-border);
+            padding: 35px 25px; text-align: center; box-shadow: var(--plastic-shadow);
+            transform-style: preserve-3d; transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        @keyframes cardReveal { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
-        .vault-details-display h3 { font-size: 1.8rem; margin-bottom: 10px; font-weight: 700; }
-        .vault-details-display .full-price { font-size: 2.2rem; font-weight: 900; margin-bottom: 20px; }
-        .vault-details-display ul { list-style: none; margin-top: 15px; }
-        .vault-details-display ul li { padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05); color: var(--text-muted); display: flex; align-items: center; gap: 10px; }
+        .carousel-item-wrap.active { display: block; animation: cardSlideIn 0.5s ease-out; }
+        @keyframes cardSlideIn { from { transform: translateZ(-150px) rotateY(-15deg); opacity: 0; } to { transform: translateZ(0) rotateY(0); opacity: 1; } }
         
-        @media (min-width: 700px) {
-            .classroom-interface { flex-direction: row; gap: 80px; }
-            .vault-grid { grid-template-columns: repeat(4, 1fr); }
+        .carousel-item-wrap h4 { font-size: 1.7rem; margin-bottom: 8px; font-weight: 700; }
+        .carousel-item-wrap .c-price { font-size: 2.2rem; font-weight: 900; margin-bottom: 15px; text-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+        .carousel-item-wrap p { font-size: 1.02rem; color: #d1d4dc; margin-bottom: 20px; }
+        
+        /* EMISSIONE LUCI DELLE SCHEDE */
+        .c-base h4 { color: #f8f9fa; } .c-base { box-shadow: 0 0 40px rgba(255,255,255,0.08), var(--plastic-shadow); }
+        .c-premium h4, .c-premium .c-price { color: var(--premium); } .c-premium { box-shadow: 0 0 40px rgba(0,122,255,0.25), var(--plastic-shadow); }
+        .c-deluxe h4, .c-deluxe .c-price { color: var(--deluxe); } .c-deluxe { box-shadow: 0 0 40px rgba(241,196,15,0.25), var(--plastic-shadow); }
+        .c-vip h4, .c-vip .c-price { color: var(--vip); } .c-vip { box-shadow: 0 0 40px rgba(155,93,229,0.25), var(--plastic-shadow); border-color: var(--vip); }
+
+        .btn-inspect { padding: 10px 25px; background: rgba(255,255,255,0.07); color: white; border: 1px solid rgba(255,255,255,0.15); border-radius: 10px; cursor: pointer; font-weight: 700; transition: background 0.2s; }
+        .btn-inspect:hover { background: white; color: #04050f; }
+
+        /* SCHEDA D'ISPEZIONE COMPLETA IN BASSO */
+        .vault-inspection-card {
+            display: none; background: var(--panel-glass); backdrop-filter: blur(25px); max-width: 850px; margin: 40px auto 0 auto;
+            padding: 45px 35px; border-radius: 24px; border: var(--glass-border); text-align: left;
+            box-shadow: var(--plastic-shadow), inset 0 1px 0 rgba(255,255,255,0.1); animation: inspectReveal 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
+        @keyframes inspectReveal { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .vault-inspection-card h3 { font-size: 2rem; margin-bottom: 8px; font-weight: 800; }
+        .vault-inspection-card .inspection-cost { font-size: 2.4rem; font-weight: 900; margin-bottom: 25px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 15px; }
+        .vault-inspection-card ul { list-style: none; }
+        .vault-inspection-card ul li { padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.05); color: #b1b5c0; font-size: 1.05rem; display: flex; align-items: center; gap: 12px; }
     </style>
 </head>
 <body>
-    <!-- ATTO 1 -->
-    <section class="university-entrance" id="entranceAct">
-        <div class="door-frame">
-            <div class="left-door"><div class="door-handle"></div></div>
-            <div class="right-door"><div class="door-handle"></div></div>
+    <!-- ATTO 1: INGRESSO UNIVERSITÀ -->
+    <section class="u-entrance" id="entranceAct">
+        <div class="gate-frame">
+            <div class="door-left"></div>
+            <div class="door-right"></div>
         </div>
-        <div class="wavy-welcome">
+        <div class="wavy-title">
             <h1>Staff Academy Control</h1>
-            <p>Benvenuto nell'infrastruttura cyber dell'Accademia. Il satellite passivo è online nel cloud, pronto ad addestrare l'organico amministrativo dei server Discord e respingere minacce nucleari esterne.</p>
+            <p>Benvenuto nell'infrastruttura cyber dell'università. Il satellite passivo è online nel cloud, pronto ad addestrare l'organico amministrativo dei server Discord e respingere minacce nucleari esterne.</p>
             <button class="btn-action" onclick="triggerAcademyEntrance()">Entra nell'Accademia</button>
         </div>
     </section>
 
-    <!-- ATTO 2 -->
-    <section class="classroom-section" id="classroomAct">
-        <div class="blackboard">
+    <!-- ATTO 2: AULA CON LAVAGNA TRASPARENTE -->
+    <section class="u-classroom" id="classroomAct">
+        <div class="glass-board">
             <h2># CONFIGURAZIONE_SATELLITE_LOG</h2>
             <p>> Inizializzazione database relazionale ad albero `academy.db` superata...</p>
             <p>> Suite centrale di controllo integrata con 9 moduli passivi e barriere passive:</p>
@@ -155,80 +180,110 @@
                 <li>• Modulo 9: VIP Purge Protocol (Estirpazione bot spia non autorizzati).</li>
             </ul>
         </div>
-        <div class="classroom-interface">
-            <div class="standard-btns">
-                <a href="https://discord.com" class="action-btn btn-invite" onclick="playClickSound()">🎟️ Invita il Bot</a>
-                <a href="https://discord.gg/2DMQtVxW" class="action-btn btn-join" onclick="playClickSound()">👋 Entra nel Server</a>
+        <div class="class-interface">
+            <div class="btn-stack">
+                <a href="https://discord.com/oauth2/authorize?client_id=1570797501894762586&permissions=8&integration_type=0&scope=bot" class="glass-btn btn-inv" onclick="playClickSound()">🎟️ Invita il Bot</a>
+                <a href="https://discord.com" class="glass-btn btn-srv" onclick="playClickSound()">👋 Entra nel Server</a>
             </div>
-            <div class="pedestal-container">
-                <button class="floating-gold-btn" onclick="triggerVaultDescent()">👑 Scopri i Piani</button>
-                <div class="greek-pedestal"></div>
+            <div class="pedestal-wrapper">
+                <button class="gold-floating-btn" onclick="triggerVaultDescent()">👑 Caveau Licenze</button>
+                <div class="marble-pillar"></div>
             </div>
         </div>
     </section>
 
-    <!-- ATTO 3 -->
-    <section class="caveau-section" id="vaultAct">
+    <!-- SCENOGRAFIA INTERMEDIA: LA DISCESA NEL TUNNEL -->
+    <section class="shaft-tunnel" id="shaftTunnel">
+        <div class="dirt-layer"></div>
+        <div class="industrial-pipe pipe-left"><div class="pipe-valve"></div></div>
+        <div class="industrial-pipe pipe-right"></div>
+    </section>
+
+    <!-- ATTO 3: IL CAVEAU DELLE LICENZE -->
+    <section class="u-vault" id="vaultAct">
         <h2>🔒 IL CAVEAU DELLE LICENZE SATELLITE</h2>
-        <div class="vault-grid">
-            <div class="vault-card v-base" onclick="revealVaultPlan('base')">
-                <h4>Piano Base</h4><div class="v-price">€0 / Gratis</div><p>Quiz Standard e canali volatili...</p>
+        <div class="gold-pile">
+            <div class="gold-bar"></div><div class="gold-bar"></div><div class="gold-bar"></div><div class="gold-bar"></div>
+        </div>
+        <div class="carousel-view">
+            <div class="carousel-item-wrap c-base active">
+                <h4>Piano Base</h4><div class="c-price">€0 / Gratis</div><p>Quiz Standard e canali volatili...</p>
+                <button class="btn-inspect" onclick="revealVaultPlan('base')">Ispeziona Specifiche</button>
             </div>
-            <div class="vault-card v-premium" onclick="revealVaultPlan('premium')">
-                <h4>Premium</h4><div class="v-price">€4.99 / mese</div><p>Centro Sanzioni e tasti /toggle...</p>
+            <div class="carousel-item-wrap c-premium">
+                <h4>Premium</h4><div class="c-price">€4.99 / mese</div><p>Centro Sanzioni e tasti /toggle...</p>
+                <button class="btn-inspect" onclick="revealVaultPlan('premium')">Ispeziona Specifiche</button>
             </div>
-            <div class="vault-card v-deluxe" onclick="revealVaultPlan('deluxe')">
-                <h4>Deluxe</h4><div class="v-price">€9.99 / mese</div><p>Intelligence 5-7 e Avatar Capture...</p>
+            <div class="carousel-item-wrap c-deluxe">
+                <h4>Deluxe</h4><div class="c-price">€9.99 / mese</div><p>Intelligence 5-7 e Avatar Capture...</p>
+                <button class="btn-inspect" onclick="revealVaultPlan('deluxe')">Ispeziona Specifiche</button>
             </div>
-            <div class="vault-card v-vip" onclick="revealVaultPlan('vip')">
-                <h4>Piano VIP</h4><div class="v-price">€19.99 / mese</div><p>Purge, Blacklist e 15 Scenari...</p>
+            <div class="carousel-item-wrap c-vip">
+                <h4>Piano VIP</h4><div class="c-price">€19.99 / mese</div><p>Purge, Blacklist e 15 Scenari...</p>
+                <button class="btn-inspect" onclick="revealVaultPlan('vip')">Ispeziona Specifiche</button>
             </div>
         </div>
-        <div class="vault-details-display" id="detailsDisplay">
-            <h3 id="displayTitle">Seleziona Licenza</h3>
-            <div class="full-price" id="displayPrice">-</div>
-            <p id="displayDesc">-</p>
-            <ul id="displaySpecs"></ul>
+        <div class="vault-inspection-card" id="inspectionCard">
+            <h3 id="inspectTitle">Seleziona Licenza</h3>
+            <div class="inspection-cost" id="inspectPrice">-</div>
+            <p id="inspectDesc">-</p>
+            <ul id="inspectSpecs"></ul>
         </div>
     </section>
 
     <script>
-        let audioContext = null;
+        let audioCtx = null;
         function playClickSound() {
-            if (!audioContext) audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            let osc = audioContext.createOscillator(), gain = audioContext.createGain();
-            osc.type = 'triangle'; osc.frequency.setValueAtTime(140, audioContext.currentTime);
-            osc.frequency.exponentialRampToValueAtTime(40, audioContext.currentTime + 0.05);
-            gain.gain.setValueAtTime(0.15, audioContext.currentTime); gain.gain.linearRampToValueAtTime(0, audioContext.currentTime + 0.05);
-            osc.connect(gain); gain.connect(audioContext.destination); osc.start(); osc.stop(audioContext.currentTime + 0.05);
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            let osc = audioCtx.createOscillator(), gain = audioCtx.createGain();
+            osc.type = 'triangle'; osc.frequency.setValueAtTime(140, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(40, audioCtx.currentTime + 0.05);
+            gain.gain.setValueAtTime(0.15, audioCtx.currentTime); gain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.05);
+            osc.connect(gain); gain.connect(audioCtx.destination); osc.start(); osc.stop(audioCtx.currentTime + 0.05);
         }
         function triggerAcademyEntrance() {
             playClickSound(); document.getElementById('entranceAct').classList.add('open');
             setTimeout(() => {
                 document.getElementById('entranceAct').style.display = 'none';
-                let classAct = document.getElementById('classroomAct'); classAct.classList.add('visible');
-            }, 1400);
+                document.getElementById('classroomAct').classList.add('visible');
+            }, 1600);
         }
         function triggerVaultDescent() {
-            playClickSound(); window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-            setTimeout(() => { document.getElementById('vaultAct').classList.add('visible'); }, 300);
+            playClickSound();
+            let tunnel = document.getElementById('shaftTunnel'); tunnel.style.display = 'block';
+            window.scrollTo({ top: tunnel.offsetTop, behavior: 'smooth' });
+            setTimeout(() => {
+                let vault = document.getElementById('vaultAct'); vault.style.display = 'block';
+                window.scrollTo({ top: vault.offsetTop, behavior: 'smooth' });
+                setTimeout(() => { vault.classList.add('visible'); startCarouselRotation(); }, 600);
+            }, 1200);
         }
-        const planData = {
+        let currentIndex = 0; let rotationInterval = null;
+        function startCarouselRotation() {
+            if (rotationInterval) return;
+            const items = document.querySelectorAll('.carousel-item-wrap');
+            rotationInterval = setInterval(() => {
+                items[currentIndex].classList.remove('active');
+                currentIndex = (currentIndex + 1) % items.length;
+                items[currentIndex].classList.add('active');
+            }, 3000);
+        }
+        const planSpecs = {
             base: { t: "Licenza Base Teorica", p: "€0.00 / Gratuito", d: "Modulo standard d'ingresso accademico per lo studio teorico dei comandi.", s: ["• Pool Quiz Base (3 domande casuali)", "• Creazione aule esame private volatili", "• Ispezioni radar log standard", "• Sincronizzazione database locale"] },
-            premium: { t: "Licenza Premium Operativa", p: "€4.99 / Mensile", d: "Sblocca l'apparato sanzionatorio ed esecutivo centralizzato per la moderazione.", s: ["• Centro Sanzioni /mod attivo (Strike, Ban, Mute, Kick)", "• Pannello interruttori /toggle con risposte Verde/Rosso", "• Allocazione Ticket persistenti tramite bottone", "• Reset degli strike ed aule provini avanzate"] },
+            premium: { t: "Licenza Premium Operativa", p: "€4.99 / Mensile", d: "Sblocca l'apparato sanzionatorio ed esecutivo centralizzato per la moderazione.", s: ["• Centro Sanzioni /mod attivo (Strike, Ban, Mute, Kick)", "• Pannello interruttori /toggle con risposte Verde/Rosso", "• Allocazione Ticket provini tramite bottone", "• Reset degli strike ed aule provini avanzate"] },
             deluxe: { t: "Licenza Deluxe Intelligence", p: "€9.99 / Mensile", d: "Espansione totale dei moduli radar di sorveglianza e dell'estetica di gilda.", s: ["• Attivazione Moduli d'Intelligence passivi 5, 6 e 7", "• Caricamento grafico con cattura dell'Avatar in ingresso", "• Sblocco del Quiz Pool Avanzato (8 varianti casuali)", "• Registro Audit isolato e log automatici potenziati"] },
-            vip: { t: "Licenza VIP Forensic Shield", p: "€19.99 / Mensile", d: "Massimo grado di sbarramento nucleare, bonifica fedine ed estirpazione minacce.", s: ["• Modulo 8: Forensic Audit Containment (Isolamento istantaneo violazioni)", "• Modulo 9: VIP Purge Protocol (Scansione per estirpare bot spia)", "• Registro Blacklist permanente e Pardon Globale distrettuale", "• Pool Scenari d'emergenza ed urgenza ampliato a 15 varianti casuali"] }
+            vip: { t: "Licenza VIP Forensic Shield", p: "€19.99 / Mensile", d: "Massimo grado di sbarramento nucleare, bonifica fedine ed estirpazione minacce.", s: ["• Modulo 8: Forensic Audit Containment (Isolamento violazioni)", "• Modulo 9: VIP Purge Protocol (Scansione per estirpare bot spia)", "• Registro Blacklist permanente e Pardon Globale distrettuale", "• Pool Scenari d'emergenza ed urgenza ampliato a 15 varianti casuali"] }
         };
         function revealVaultPlan(planKey) {
-            playClickSound(); const data = planData[planKey];
-            document.getElementById('displayTitle').innerText = data.t;
-            document.getElementById('displayTitle').style.color = planKey === 'base' ? '#f8f9fa' : `var(--${planKey})`;
-            document.getElementById('displayPrice').innerText = data.p;
-            document.getElementById('displayPrice').style.color = planKey === 'base' ? '#f8f9fa' : `var(--${planKey})`;
-            document.getElementById('displayDesc').innerText = data.d;
-            const specsUl = document.getElementById('displaySpecs'); specsUl.innerHTML = '';
+            playClickSound(); clearInterval(rotationInterval); rotationInterval = null; const data = planSpecs[planKey];
+            document.getElementById('inspectTitle').innerText = data.t;
+            document.getElementById('inspectTitle').style.color = planKey === 'base' ? '#f8f9fa' : `var(--${planKey})`;
+            document.getElementById('inspectPrice').innerText = data.p;
+            document.getElementById('inspectPrice').style.color = planKey === 'base' ? '#f8f9fa' : `var(--${planKey})`;
+            document.getElementById('inspectDesc').innerText = data.d;
+            const specsUl = document.getElementById('inspectSpecs'); specsUl.innerHTML = '';
             data.s.forEach(spec => { let li = document.createElement('li'); li.innerText = spec; specsUl.appendChild(li); });
-            document.getElementById('detailsDisplay').style.display = 'block';
+            document.getElementById('inspectionCard').style.display = 'block';
         }
     </script>
 </body>
