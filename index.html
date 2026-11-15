@@ -3,173 +3,195 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Polaris Studios - Accademia Core</title>
+    <title>Staff Academy - Plastic Lucid Project</title>
     <style>
         :root {
-            --bg-dark: #070b19;
+            --bg-dark: #040612;
             --primary-blue: #007aff;
             --vip-purple: #9b5de5;
             --neon-green: #2ecc71;
+            --polaris-blue: #00b4d8;
             --text-light: #ffffff;
             --text-muted: #8e9bb0;
-            --plastic-lucid: rgba(255, 255, 255, 0.03);
+            --plastic-lucid: rgba(255, 255, 255, 0.02);
             --plastic-border: 1px solid rgba(255, 255, 255, 0.12);
-            --morbido-radius: 24px;
-            --fluid-shadow: 0 25px 60px rgba(0, 0, 0, 0.75), inset 0 2px 4px rgba(255, 255, 255, 0.15);
+            --morbido-radius: 26px;
+            --fluid-shadow: 0 30px 65px rgba(0, 0, 0, 0.75), inset 0 2px 4px rgba(255, 255, 255, 0.15);
         }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, sans-serif; scroll-behavior: smooth; }
-        body {
-            background: var(--bg-dark);
-            color: var(--text-light);
-            overflow-x: hidden;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            position: relative;
-        }
-        #spaceCanvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: -1;
-            pointer-events: none;
-        }
-        .navbar-lucid {
-            width: 100%;
-            padding: 20px 40px;
-            background: rgba(7, 11, 25, 0.75);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 100;
-        }
-        .nav-logo { font-size: 1.3rem; font-weight: 800; letter-spacing: -0.5px; display: flex; align-items: center; gap: 10px; }
-        .nav-links { display: none; gap: 30px; list-style: none; }
-        @media(min-width: 900px) { .nav-links { display: flex; } }
-        .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.95rem; font-weight: 600; transition: color 0.2s; }
+        body { background: var(--bg-dark); color: var(--text-light); overflow-x: hidden; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; position: relative; padding-top: 100px; }
+        #spaceCanvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none; }
+        .navbar-lucid { width: 100%; padding: 20px 40px; background: rgba(4, 6, 18, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255, 255, 255, 0.06); display: flex; justify-content: space-between; align-items: center; position: fixed; top: 0; left: 0; z-index: 100; }
+        .nav-logo { font-size: 1.4rem; font-weight: 800; letter-spacing: -0.5px; color: #ffffff; cursor: pointer; }
+        .nav-links { display: none; gap: 25px; list-style: none; align-items: center; }
+        @media(min-width: 950px) { .nav-links { display: flex; } }
+        .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.95rem; font-weight: 600; transition: color 0.2s; cursor: pointer; }
         .nav-links a:hover { color: var(--text-light); }
-        .nav-btn-right { background: var(--primary-blue); color: #ffffff; padding: 10px 24px; border-radius: 20px; text-decoration: none; font-weight: 700; font-size: 0.9rem; box-shadow: 0 4px 15px rgba(0, 122, 255, 0.3); transition: transform 0.2s; border: none; cursor: pointer; }
+        .nav-btn-right { background: linear-gradient(135deg, var(--primary-blue), #0056b3); color: #ffffff; padding: 12px 26px; border-radius: 22px; text-decoration: none; font-weight: 700; font-size: 0.9rem; box-shadow: 0 6px 20px rgba(0, 122, 255, 0.35); border: none; cursor: pointer; transition: transform 0.2s; }
         .nav-btn-right:hover { transform: translateY(-2px); }
+        .section-lucid-container { width: 100%; max-width: 1000px; padding: 60px 20px; margin-bottom: 40px; z-index: 10; display: flex; flex-direction: column; align-items: center; text-align: center; }
+        .logo-box-morbido { width: 150px; height: 160px; background: rgba(255,255,255,0.01); border: var(--plastic-border); border-radius: 40px; box-shadow: var(--fluid-shadow); display: flex; justify-content: center; align-items: center; margin-bottom: 40px; position: relative; }
+        .logo-box-morbido::after { content: ''; position: absolute; width: 100%; height: 100%; top: 0; left: 0; border-radius: 40px; box-shadow: 0 0 40px rgba(155, 93, 229, 0.2); pointer-events: none; }
+        .logo-icon-svg { width: 75px; height: 75px; filter: drop-shadow(0 0 15px var(--vip-purple)); }
+        .section-lucid-container h2 { font-size: 3.5rem; font-weight: 900; letter-spacing: -1px; margin-bottom: 25px; background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .section-lucid-container p { font-size: 1.15rem; color: var(--text-muted); max-width: 750px; line-height: 1.7; margin-bottom: 45px; }
+        .action-flex-box { display: flex; flex-direction: column; gap: 20px; width: 100%; max-width: 580px; justify-content: center; margin-bottom: 30px; }
+        @media(min-width: 600px) { .action-flex-box { flex-direction: row; } }
     </style>
 </head>
     <style>
-        .hero-scenery-container {
-            margin-top: 140px;
-            width: 100%;
-            max-width: 900px;
-            padding: 40px 20px;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            z-index: 10;
-        }
-        .logo-box-morbido {
-            width: 160px;
-            height: 160px;
-            background: linear-gradient(135deg, #111a36 0%, #090e1e 100%);
-            border: var(--plastic-border);
-            border-radius: 38px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5), inset 0 2px 4px rgba(255,255,255,0.1);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 45px;
-            position: relative;
-        }
-        .logo-box-morbido::after {
-            content: ''; position: absolute; width: 100%; height: 100%; top: 0; left: 0;
-            border-radius: 38px; box-shadow: 0 0 35px rgba(0, 122, 255, 0.25); pointer-events: none;
-        }
-        .logo-icon-svg { width: 80px; height: 80px; filter: drop-shadow(0 0 15px var(--primary-blue)); }
-        .hero-scenery-container h2 { font-size: 3.8rem; font-weight: 900; letter-spacing: -1px; margin-bottom: 25px; background: linear-gradient(180deg, #ffffff 0%, #e2e8f0 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .hero-scenery-container p { font-size: 1.2rem; color: var(--text-muted); max-width: 680px; line-height: 1.7; margin-bottom: 45px; }
-        .action-flex-box { display: flex; flex-direction: column; gap: 20px; width: 100%; max-width: 580px; justify-content: center; margin-bottom: 35px; }
-        @media(min-width: 600px) { .action-flex-box { flex-direction: row; } }
-        .btn-action-plastic { flex: 1; padding: 18px 30px; font-size: 1.05rem; font-weight: 700; border-radius: 18px; border: var(--plastic-border); color: #ffffff; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 12px; transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1); text-decoration: none; box-shadow: var(--fluid-shadow); }
-        .btn-blue-core { background: linear-gradient(135deg, rgba(0,122,255,0.1) 0%, rgba(0,122,255,0.25) 100%); border-color: rgba(0,122,255,0.4); }
-        .btn-blue-core:hover { border-color: var(--primary-blue); box-shadow: 0 0 30px rgba(0,122,255,0.35); transform: translateY(-3px); }
-        .btn-purple-security { background: linear-gradient(135deg, rgba(155,93,229,0.1) 0%, rgba(155,93,229,0.25) 100%); border-color: rgba(155,93,229,0.4); }
-        .btn-purple-security:hover { border-color: var(--vip-purple); box-shadow: 0 0 30px rgba(155,93,229,0.35); transform: translateY(-3px); }
-        .btn-inspiration-small { background: rgba(255, 255, 255, 0.02); border-color: rgba(255, 255, 255, 0.08); font-size: 0.85rem; padding: 12px 24px; border-radius: 12px; color: var(--text-muted); cursor: pointer; transition: all 0.2s; max-width: 240px; font-weight: 600; }
-        .btn-inspiration-small:hover { border-color: rgba(255, 255, 255, 0.2); color: #ffffff; background: rgba(255,255,255,0.05); }
-        .polaris-footer-section { width: 100%; max-width: 850px; margin: 90px auto 60px auto; padding: 50px 40px; background: rgba(255, 255, 255, 0.01); backdrop-filter: blur(20px); border-radius: 28px; border: var(--plastic-border); box-shadow: var(--fluid-shadow); text-align: center; z-index: 10; }
-        .polaris-footer-section h3 { font-size: 2.1rem; font-weight: 800; margin-bottom: 15px; color: #ffffff; }
-        .polaris-footer-section p { font-size: 1.1rem; color: var(--text-muted); line-height: 1.6; max-width: 650px; margin: 0 auto 35px auto; }
+        .btn-action-plastic { flex: 1; padding: 20px 30px; font-size: 1.1rem; font-weight: 700; border-radius: 20px; border: var(--plastic-border); color: #ffffff; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 12px; transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1); text-decoration: none; box-shadow: var(--fluid-shadow); }
+        .btn-blue-core { background: linear-gradient(135deg, rgba(0,122,255,0.05) 0%, rgba(0,122,255,0.2) 100%); border-color: rgba(0,122,255,0.4); }
+        .btn-blue-core:hover { border-color: var(--primary-blue); box-shadow: 0 0 35px rgba(0,122,255,0.4); transform: translateY(-3px); }
+        .btn-purple-security { background: linear-gradient(135deg, rgba(155,93,229,0.05) 0%, rgba(155,93,229,0.2) 100%); border-color: rgba(155,93,229,0.4); }
+        .btn-purple-security:hover { border-color: var(--vip-purple); box-shadow: 0 0 35px rgba(155,93,229,0.4); transform: translateY(-3px); }
+        .btn-inspiration-small { background: rgba(255, 255, 255, 0.01); border-color: rgba(255, 255, 255, 0.08); font-size: 0.9rem; padding: 12px 28px; border-radius: 14px; color: var(--text-muted); cursor: pointer; transition: all 0.2s; font-weight: 600; }
+        .btn-inspiration-small:hover { border-color: rgba(255, 255, 255, 0.2); color: #ffffff; background: rgba(255,255,255,0.04); }
+        .card-lucid-info { background: rgba(255,255,255,0.01); border: 1px solid rgba(255,255,255,0.06); border-radius: var(--morbido-radius); padding: 40px; text-align: left; width: 100%; box-shadow: inset 0 1px 2px rgba(255,255,255,0.03); margin-top: 20px; }
+        .card-lucid-info h3 { font-size: 1.8rem; font-weight: 800; margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 12px; }
+        .card-lucid-info p, .card-lucid-info li { font-size: 1.05rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 15px; }
+        .card-lucid-info ul { margin-left: 25px; margin-bottom: 20px; }
+        .forensic-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        .forensic-table th, .forensic-table td { padding: 16px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 1rem; }
+        .forensic-table th { font-weight: 700; color: #ffffff; background: rgba(255,255,255,0.02); }
+        .forensic-table td { color: var(--text-muted); }
+        .forensic-table tr:hover td { color: #ffffff; background: rgba(255,255,255,0.01); }
+        .vault-carousel-scenery { position: relative; width: 100%; max-width: 550px; height: 280px; margin: 40px auto; perspective: 1200px; }
+        .luxury-item-card { position: absolute; width: 100%; height: 100%; top: 0; left: 0; display: none; background: rgba(4, 6, 18, 0.85); backdrop-filter: blur(20px); border-radius: 24px; border: 1px solid rgba(255,255,255,0.1); padding: 40px 30px; text-align: center; box-shadow: var(--fluid-shadow); }
+        .luxury-item-card.active { display: block; animation: vRot 0.5s ease-out; }
+        @keyframes vRot { from { transform: translateZ(-150px) rotateY(-15deg); opacity: 0; } to { transform: translateZ(0) rotateY(0); opacity: 1; } }
+        .luxury-item-card h4 { font-size: 1.6rem; margin-bottom: 8px; font-weight: 800; }
+        .luxury-item-card .luxury-price-tag { font-size: 2.3rem; font-weight: 900; margin-bottom: 15px; color: var(--primary-blue); }
+        .luxury-audit-board { display: none; background: rgba(4, 6, 18, 0.9); backdrop-filter: blur(30px); width: 100%; max-width: 650px; margin: 30px auto 0 auto; padding: 40px; border-radius: 24px; border: 1px solid rgba(255,255,255,0.1); text-align: left; box-shadow: var(--fluid-shadow); position: relative; }
+        .close-audit-btn { position: absolute; top: 20px; right: 25px; background: rgba(255,255,255,0.05); color: #ff4d4d; border: 1px solid rgba(255,255,255,0.1); width: 40px; height: 40px; border-radius: 50%; font-size: 1.1rem; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .close-audit-btn:hover { background: #ff4d4d; color: white; }
+        .polaris-footer-section { width: 100%; max-width: 1000px; margin: 100px auto 40px auto; padding: 45px; background: rgba(7, 11, 25, 0.8); backdrop-filter: blur(20px); border-radius: var(--morbido-radius); border: 1px solid rgba(255,255,255,0.08); box-shadow: var(--fluid-shadow); text-align: center; z-index: 10; border-color: rgba(0, 180, 216, 0.3); }
+        .polaris-footer-section h3 { font-size: 2rem; font-weight: 800; margin-bottom: 15px; color: #ffffff; }
+        .polaris-footer-section p { font-size: 1.05rem; color: #8e9bb0; line-height: 1.6; max-width: 700px; margin: 0 auto 30px auto; }
         .modal-overlay-lucid { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(3, 5, 12, 0.8); backdrop-filter: blur(12px); display: none; justify-content: center; align-items: center; z-index: 200; opacity: 0; transition: opacity 0.4s ease; }
         .modal-overlay-lucid.active { display: flex; opacity: 1; }
-        .modal-box-lucid { background: rgba(255, 255, 255, 0.04); border: var(--plastic-border); box-shadow: 0 30px 70px rgba(0,0,0,0.7); max-width: 440px; width: 100%; padding: 40px; border-radius: var(--morbido-radius); text-align: center; transform: scale(0.9); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; }
-        .modal-overlay-lucid.active .modal-box-lucid { transform: scale(1); }
+        .modal-box-lucid { background: rgba(255, 255, 255, 0.04); border: var(--plastic-border); box-shadow: 0 30px 70px rgba(0,0,0,0.7); max-width: 440px; width: 100%; padding: 40px; border-radius: var(--morbido-radius); text-align: center; position: relative; }
         .modal-choice-btn { display: block; width: 100%; padding: 16px; margin-bottom: 15px; border-radius: 14px; text-decoration: none; font-weight: 700; font-size: 1.05rem; transition: all 0.2s; border: var(--plastic-border); text-align: center; }
-        .btn-choice-app { background: #5865F2; color: #ffffff; border-color: rgba(255,255,255,0.1); }
-        .btn-choice-app:hover { background: #4752c4; transform: translateY(-2px); }
-        .btn-choice-web { background: rgba(255,255,255,0.05); color: #ffffff; }
-        .btn-choice-web:hover { background: rgba(255,255,255,0.12); transform: translateY(-2px); }
-        .btn-modal-close { position: absolute; top: 16px; right: 20px; font-size: 1.5rem; font-weight: 700; color: var(--text-muted); background: none; border: none; cursor: pointer; transition: color 0.2s; }
-        .btn-modal-close:hover { color: #ff4d4d; }
+        .btn-choice-app { background: #5865F2; color: #ffffff; } .btn-choice-app:hover { background: #4752c4; transform: translateY(-2px); }
+        .btn-choice-web { background: rgba(255,255,255,0.05); color: #ffffff; } .btn-choice-web:hover { background: rgba(255,255,255,0.12); transform: translateY(-2px); }
+        .btn-modal-close { position: absolute; top: 16px; right: 20px; font-size: 1.5rem; font-weight: 700; color: var(--text-muted); background: none; border: none; cursor: pointer; }
     </style>
 <body>
     <canvas id="spaceCanvas"></canvas>
 
     <nav class="navbar-lucid">
-        <div class="nav-logo">🌌 Polaris Studios</div>
+        <div class="nav-logo" onclick="window.scrollTo({top:0, behavior:'smooth'})">🌌 Staff Academy</div>
         <ul class="nav-links">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Bot</a></li>
-            <li><a href="#">Funzioni</a></li>
-            <li><a href="#">Comandi</a></li>
-            <li><a href="#">Invita</a></li>
-            <li><a href="#">Discord</a></li>
+            <li><a href="#homeSec">Home</a></li>
+            <li><a href="#botSec">Bot</a></li>
+            <li><a href="#funzioniSec">Funzioni</a></li>
+            <li><a href="#comandiSec">Comandi</a></li>
+            <li><a href="#invitaSec">Invita</a></li>
+            <li><a href="#pianiSec">Piani</a></li>
         </ul>
-        <button class="nav-btn-right" onclick="openRoutingModal('bot')">Invita i bot</button>
+        <button class="nav-btn-right" onclick="openRoutingModal('server')">Entra nel Server</button>
     </nav>
 
-    <main class="hero-scenery-container">
+    <section class="section-lucid-container" id="homeSec" style="margin-top: 40px;">
         <div class="logo-box-morbido">
             <svg class="logo-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke-linecap="round" stroke-linejoin="round" fill="rgba(0,122,255,0.1)"/>
+                <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke-linecap="round" stroke-linejoin="round" fill="rgba(155,93,229,0.1)"/>
             </svg>
         </div>
-        <h2>Polaris Studios</h2>
-        <p>Due bot Discord per il tuo server: **Polaris Core** per gestire ticket, backup, giveaway e ruoli, **Polaris Security** per proteggerlo da nuke, raid e spam.</p>
-
+        <h2>Staff Academy Core</h2>
+        <p>L'infrastruttura d'élite per la protezione, la gestione e la telemetria delle aule d'esame. Il satellite è attivo e sincronizzato in tempo reale con il cloud di Render e il database SQLite3.</p>
         <div class="action-flex-box">
-            <button class="btn-action-plastic btn-blue-core" onclick="openRoutingModal('bot')">
-                <span>🤖</span> Aggiungi Polaris Core
-            </button>
-            <button class="btn-action-plastic btn-purple-security" onclick="openRoutingModal('server')">
-                <span>🛡️</span> Aggiungi Polaris Security
-            </button>
+            <button class="btn-action-plastic btn-blue-core" onclick="openRoutingModal('bot')"><span>🤖</span> Invita il Bot</button>
+            <button class="btn-action-plastic btn-purple-security" onclick="openRoutingModal('server')"><span>💜</span> Entra nel Server</button>
         </div>
+        <button class="btn-inspiration-small" onclick="document.getElementById('pianiSec').scrollIntoView({behavior:'smooth'})">📦 Vedi Piani Aggiuntivi</button>
+    </section>
 
-        <button class="btn-inspiration-small" onclick="scrollToInspiration()">
-            ✨ La nostra ispirazione
-        </button>
-    </main>
+    <section class="section-lucid-container" id="botSec">
+        <div class="card-lucid-info">
+            <h3>🤖 Perché nasce il Progetto</h3>
+            <p>Il bot Staff Academy nasce dall'esigenza forense di digitalizzare, governare e blindare le sessioni d'esame e i provini all'interno delle community Discord. Attraverso una sincronizzazione ad albero, il bot memorizza le fedine penali degli studenti, automatizza l'assegnazione dei ruoli e monitora i flussi radar.</p>
+        </div>
+    </section>
 
-    <section class="polaris-footer-section" id="polarisDedicatedArea">
-        <h3>🌌 Ringraziamenti Speciali</h3>
-        <p>Un ringraziamento profondo e speciale a Polaris Studios per aver ispirato lo sbarramento balistico e lo sviluppo della nostra infrastruttura di sicurezza. Siete l'eccellenza dello sviluppo cloud.</p>
-        <button class="glass-luxury-btn btn-discord-invite" onclick="openRoutingModal('inspiration')" style="width: 100%; max-width: 380px; margin: 0 auto; display: block; border-radius: 18px; padding: 20px; font-weight: 800; font-size: 1.1rem; background: rgba(255,255,255,0.03); border: var(--plastic-border); cursor: pointer; box-shadow: var(--fluid-shadow);">
-            🪐 Entra nel Server di Polaris
-        </button>
+    <section class="section-lucid-container" id="funzioniSec">
+        <div class="card-lucid-info">
+            <h3>⚡ Funzioni Principali del Satellite</h3>
+            <p>**1. Protezione Anti-Raid Balistica:** Il bot monitora i flussi d'ingresso. Se rileva più di 5 ingressi in 3 secondi, fa scattare l'allarme log, tagga lo staff e blocca temporaneamente i canali pubblici inserendo una slowmode d'urgenza.</p>
+            <p>**2. Sblocco Condizionale Modulo 10:** In caso di raid attivo, il database locale apre l'accesso d'emergenza al Distretto 10 (Gestione Crisi), consentendo ai moderatori di effettuare lockdown a specchio e bonifiche massive.</p>
+            <p>**3. AutoMod & Anti-Nuke:** Scansione costante sui link e sugli allegati multimediali. Qualunque tentativo illecito di eliminare ruoli o canali da account compromessi viene intercettato in meno di 0.5 secondi, spogliando l'autore di ogni privilegio.</p>
+        </div>
+    </section>
+
+    <section class="section-lucid-container" id="comandiSec">
+        <div class="card-lucid-info">
+            <h3>📋 Registro dei Comandi Slash</h3>
+            <table class="forensic-table">
+                <thead><tr><th>Comando</th><th>Descrizione Forense delle Specifiche</th></tr></thead>
+                <tbody>
+                    <tr><td>/setup</td><td>Inizializza l'allineamento dei canali log, benvenuto, ruoli staff e categorie aule.</td></tr>
+                    <tr><td>/toggle</td><td>Attiva o disattiva istantaneamente le barriere passive (AutoMod, Anti-Raid, Quiz) dando un feedback in chiaro.</td></tr>
+                    <tr><td>/mod</td><td>Pannello disciplinare per assegnare strike, ispezionare fedine penali, mutare, cacciare o bannare.</td></tr>
+                    <tr><td>/operazioni_speciali</td><td>Menu ad ampio spettro che elenca individualmente i moduli dall'1 al 10 con spiegazioni dettagliate.</td></tr>
+                    <tr><td>/gestione_accademia</td><td>Suite dell'organico per avviare quiz d'addestramento, promuovere reclute o cancellare stanze.</td></tr>
+                    <tr><td>/quiz</td><td>Genera una verifica casuale estrapolata dal pool per testare le competenze dello staffer.</td></tr>
+                    <tr><td>/simulazione</td><td>Inietta uno scenario d'emergenza casuale all'interno del canale log per addestrare l'organico.</td></tr>
+                    <tr><td>/backup_crea</td><td>Salva l'intera mappa strutturale dei canali del server all'interno delle tabelle del database.</td></tr>
+                    <tr><td>/backup_ripristina</td><td>Smantella i canali corrotti e ripristina la struttura originale salvata dal database locale.</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="section-lucid-container" id="invitaSec">
+        <div class="card-lucid-info">
+            <h3>📦 Come Invitare e Settare il Bot</h3>
+            <p>1. Clicca sul pulsante **Invita il Bot** posizionato nella Home per aprire la schermata di autorizzazione OAuth2.</p>
+            <p>2. Assicurati di concedere i permessi di **Amministratore (Permissions=8)** per consentire all'Anti-Nuke di operare.</p>
+            <p>3. Esegui il comando slash **`/setup`** configurando tutti i ruoli e i canali log richiesti dall'apparato.</p>
+            <p>4. Invia il pannello di verifica regolamento e provini digitando **`/setup_verifica`** e **`/ticket_setup`**.</p>
+        </div>
+    </section>
+
+    <section class="section-lucid-container" id="pianiSec">
+        <h2>🔒 IL CAVEAU DELLE LICENZE SATELLITE</h2>
+        <div class="vault-carousel-scenery">
+            <div class="luxury-item-card active" style="box-shadow:0 0 30px rgba(255,255,255,0.05);">
+                <h4>Piano Base</h4><div class="luxury-price-tag">€0 / Gratis</div><p>Esercitazioni teoriche d'organico con Quiz standard e aule esame volatili...</p>
+                <button class="btn-luxury-inspect" onclick="revealVaultPlan('base')">Ispeziona Specifiche</button>
+            </div>
+            <div class="luxury-item-card" style="box-shadow:0 0 30px rgba(0,122,255,0.2); border-color:var(--primary-blue);">
+                <h4 style="color:var(--primary-blue);">Piano Premium</h4><div class="luxury-price-tag" style="color:var(--primary-blue);">€4.99 / mese</div><p>Centro Sanzioni /mod attivo, tasti interruttori /toggle e ticket d'aula...</p>
+                <button class="btn-luxury-inspect" onclick="revealVaultPlan('premium')">Ispeziona Specifiche</button>
+            </div>
+            <div class="luxury-item-card" style="box-shadow:0 0 30px rgba(241,196,15,0.2); border-color:var(--deluxe);">
+                <h4 style="color:var(--deluxe);">Piano Deluxe</h4><div class="luxury-price-tag" style="color:var(--deluxe);">€9.99 / mese</div><p>Intelligence passiva 5-7, log automatici potenziati e pool d'esame esteso...</p>
+                <button class="btn-luxury-inspect" onclick="revealVaultPlan('deluxe')">Ispeziona Specifiche</button>
+            </div>
+            <div class="luxury-item-card" style="box-shadow:0 0 30px rgba(155,93,229,0.2); border-color:var(--vip-purple);">
+                <h4 style="color:var(--vip-purple);">Piano VIP</h4><div class="luxury-price-tag" style="color:var(--vip-purple);">€19.99 / mese</div><p>VIP Purge estirpazione spie, forensic audit containment e 15 scenari d'urgenza...</p>
+                <button class="btn-luxury-inspect" onclick="revealVaultPlan('vip')">Ispeziona Specifiche</button>
+            </div>
+        </div>
+        <div class="luxury-audit-board" id="inspectionCard">
+            <button class="close-audit-btn" onclick="closePlanInspection()">X</button>
+            <h3 id="inspectTitle" style="font-weight:800; margin-bottom:10px;">-</h3>
+            <div class="audit-cost-text" id="inspectPrice" style="margin-bottom:15px;">-</div>
+            <p id="inspectDesc" style="margin-bottom:20px;"></p><ul id="inspectSpecs"></ul>
+        </div>
+    </section>
+
+    <section class="polaris-footer-section">
+        <h3>🌌 Ringraziamenti Speciali Polaris Studios</h3>
+        <p>Un ringraziamento profondo a Polaris Studios per aver ispirato la nostra infrastruttura balistica e lo sviluppo dei moduli di protezione satellitare. Siete l'eccellenza indiscussa dello sviluppo cloud.</p>
+        <button class="glass-luxury-btn" onclick="openRoutingModal('inspiration')" style="width: 100%; max-width: 380px; margin: 0 auto; display: block; border-radius: 18px; padding: 20px; font-weight: 800; font-size: 1.1rem; background: rgba(255,255,255,0.02); border: 1px solid rgba(0, 180, 216, 0.4); color: var(--polaris-blue); cursor: pointer; box-shadow: 0 15px 35px rgba(0,0,0,0.5);">🪐 Entra nel Server di Polaris</button>
     </section>
 
     <div class="modal-overlay-lucid" id="routingModal">
         <div class="modal-box-lucid">
             <button class="btn-modal-close" onclick="closeRoutingModal()">×</button>
             <h3 id="modalTitle">Gateway d'Instradamento</h3>
-            <p id="modalDesc">Seleziona come desideri aprire l'interfaccia di autorizzazione per il bot selezionato.</p>
+            <p id="modalDesc">-</p>
             <a href="#" id="appRedirectLink" class="modal-choice-btn btn-choice-app" onclick="closeRoutingModal()">Apri nell'Applicazione</a>
             <a href="#" id="webRedirectLink" target="_blank" class="modal-choice-btn btn-choice-web" onclick="closeRoutingModal()">Apri nel Browser</a>
         </div>
@@ -177,105 +199,40 @@
     <script>
         const canvas = document.getElementById('spaceCanvas');
         const ctx = canvas.getContext('2d');
-        let stars = [];
-        const numStars = 60;
-
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            initStars();
-        }
-
-        function initStars() {
-            stars = [];
-            for (let i = 0; i < numStars; i++) {
-                stars.push({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height,
-                    size: Math.random() * 2 + 0.5,
-                    opacity: Math.random(),
-                    speed: Math.random() * 0.02 + 0.005
-                });
-            }
-        }
-
-        function animateSpace() {
-            ctx.fillStyle = '#070b19';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            stars.forEach(s => {
-                s.opacity += s.speed;
-                if (s.opacity > 1 || s.opacity < 0) s.speed *= -1;
-                ctx.fillStyle = `rgba(255, 255, 255, ${Math.abs(s.opacity)})`;
-                ctx.beginPath(); ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2); ctx.fill();
-            });
-            requestAnimationFrame(animateSpace);
-        }
-
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
-        animateSpace();
+        let stars = []; const numStars = 60;
+        function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; initStars(); }
+        function initStars() { stars = []; for (let i = 0; i < numStars; i++) { stars.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, size: Math.random() * 2 + 0.5, opacity: Math.random(), speed: Math.random() * 0.02 + 0.005 }); } }
+        function animateSpace() { ctx.fillStyle = '#040612'; ctx.fillRect(0, 0, canvas.width, canvas.height); stars.forEach(s => { s.opacity += s.speed; if (s.opacity > 1 || s.opacity < 0) s.speed *= -1; ctx.fillStyle = `rgba(255, 255, 255, ${Math.abs(s.opacity)})`; ctx.beginPath(); ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2); ctx.fill(); }); requestAnimationFrame(animateSpace); }
+        window.addEventListener('resize', resizeCanvas); resizeCanvas(); animateSpace();
 
         let audioCtx = null;
-        function playClickSound() {
-            try {
-                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                let osc = audioCtx.createOscillator(), gain = audioCtx.createGain();
-                osc.type = 'triangle'; osc.frequency.setValueAtTime(155, audioCtx.currentTime);
-                osc.frequency.exponentialRampToValueAtTime(45, audioCtx.currentTime + 0.05);
-                gain.gain.setValueAtTime(0.12, audioCtx.currentTime); gain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.05);
-                osc.connect(gain); gain.connect(audioCtx.destination); osc.start(); osc.stop(audioCtx.currentTime + 0.05);
-            } catch(e) {}
-        }
-
-        function scrollToInspiration() {
-            playClickSound();
-            document.getElementById('polarisDedicatedArea').scrollIntoView({ behavior: 'smooth' });
-        }
+        function playClickSound() { try { if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)(); let osc = audioCtx.createOscillator(), gain = audioCtx.createGain(); osc.type = 'triangle'; osc.frequency.setValueAtTime(155, audioCtx.currentTime); osc.frequency.exponentialRampToValueAtTime(45, audioCtx.currentTime + 0.05); gain.gain.setValueAtTime(0.12, audioCtx.currentTime); gain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.05); osc.connect(gain); gain.connect(audioCtx.destination); osc.start(); osc.stop(audioCtx.currentTime + 0.05); } catch(e) {} }
 
         const oauthUrl = "https://discord.com";
         const serverUrl = "https://discord.gg";
         const inspirationUrl = "https://discord.gg";
 
         function openRoutingModal(type) {
-            playClickSound();
-            const modal = document.getElementById('routingModal');
-            const title = document.getElementById('modalTitle');
-            const desc = document.getElementById('modalDesc');
-            const appLink = document.getElementById('appRedirectLink');
-            const webLink = document.getElementById('webRedirectLink');
-
-            if (type === 'bot') {
-                title.innerText = "🤖 Aggiungi Polaris Core";
-                desc.innerText = "Scegli se configurare il modulo Core all'interno dell'applicazione desktop nativa o via browser.";
-                appLink.href = "discord://-/oauth2/authorize?client_id=1570797501894762586&permissions=8&integration_type=0&scope=bot";
-                webLink.href = oauthUrl;
-            } else if (type === 'server') {
-                title.innerText = "🛡️ Aggiungi Polaris Security";
-                desc.innerText = "Attiva le barriere balistiche di sbarramento all'interno dell'applicazione nativa o via browser.";
-                appLink.href = "discord://discord.gg/2DMQtVxW";
-                webLink.href = serverUrl;
-            } else {
-                title.innerText = "✨ Polaris Studios Server";
-                desc.innerText = "Accedi direttamente alla community e al quartier generale ufficiale di Polaris Studios.";
-                appLink.href = "discord://discord.gg/EKkTZtKsk";
-                webLink.href = inspirationUrl;
-            }
-
-            modal.style.display = "flex";
-            setTimeout(() => { modal.classList.add('active'); }, 15);
+            playClickSound(); const modal = document.getElementById('routingModal'); const title = document.getElementById('modalTitle'); const desc = document.getElementById('modalDesc'); const appLink = document.getElementById('appRedirectLink'); const webLink = document.getElementById('webRedirectLink');
+            if (type === 'bot') { title.innerText = "🤖 Aggiungi l'Academy Bot"; desc.innerText = "Scegli se configurare il modulo Core all'interno dell'applicazione desktop nativa o via browser."; appLink.href = "discord://-/oauth2/authorize?client_id=1570797501894762586&permissions=8&integration_type=0&scope=bot"; webLink.href = oauthUrl; }
+            else if (type === 'server') { title.innerText = "🛡️ Entra nel Server"; desc.innerText = "Esegui l'accreditamento formale all'interno dell'applicazione nativa o via browser."; appLink.href = "discord://discord.gg/2DMQtVxW"; webLink.href = serverUrl; }
+            else { title.innerText = "🌌 Polaris Studios HQ"; desc.innerText = "Accedi al quartier generale ufficiale di Polaris Studios via applicazione o browser."; appLink.href = "discord://discord.gg/EKkTZtKsk"; webLink.href = inspirationUrl; }
+            modal.style.display = "flex"; setTimeout(() => { modal.classList.add('active'); }, 15);
         }
+        function closeRoutingModal() { playClickSound(); const modal = document.getElementById('routingModal'); modal.classList.remove('active'); setTimeout(() => { modal.style.display = "none"; }, 400); }
 
-        function closeRoutingModal() {
-            playClickSound();
-            const modal = document.getElementById('routingModal');
-            modal.classList.remove('active');
-            setTimeout(() => { modal.style.display = "none"; }, 400);
-        }
-
-        window.onclick = function(event) {
-            const modal = document.getElementById('routingModal');
-            if (event.target === modal) { closeRoutingModal(); }
-        }
+        let currentIndex = 0; let rotationInterval = null;
+        function startCarouselRotation() { if (rotationInterval) return; const items = document.querySelectorAll('.luxury-item-card'); rotationInterval = setInterval(() => { items[currentIndex].classList.remove('active'); currentIndex = (currentIndex + 1) % items.length; items[currentIndex].classList.add('active'); }, 3000); }
+        const planSpecs = {
+            base: { t: "Licenza Base Teorica", p: "€0.00 / Gratuito", d: "Modulo standard d'ingresso accademico per lo studio teorico dei comandi.", s: ["• Pool Quiz Base (5 domande casuali)", "• Creazione aule esame private volatili", "• Ispezioni radar log standard", "• Sincronizzazione database locale"] },
+            premium: { t: "Licenza Premium Operativa", p: "€4.99 / Mensile", d: "Sblocca l'apparato sanzionatorio ed esecutivo centralizzato per la moderazione.", s: ["• Centro Sanzioni /mod attivo (Strike, Ban, Mute, Kick)", "• Pannello interruttori /toggle con risposte Verde/Rosso", "• Allocazione Ticket provini tramite bottone", "• Tasti Reclama Ticket e Chiama Admin nelle aule"] },
+            deluxe: { t: "Licenza Deluxe Intelligence", p: "€9.99 / Mensile", d: "Espansione totale dei moduli radar di sorveglianza e dell'estetica di gilda.", s: ["• Attivazione Moduli d'Intelligence passivi 5, 6 e 7", "• Caricamento grafico con cattura dell'Avatar in ingresso", "• Sblocco del Quiz Pool Avanzato (8 varianti casuali)", "• Registro Audit isolato e log automatici potenziati"] },
+            vip: { t: "Licenza VIP Forensic Shield", p: "€19.99 / Mensile", d: "Massimo grado di sbarramento nucleare, bonifica fedine ed estirpazione minacce.", s: ["• Modulo 8: Forensic Audit Containment (Isolamento violazioni)", "• Modulo 9: VIP Purge Protocol (Scansione per estirpare bot spia)", "• Registro Blacklist permanente e Pardon Globale distrettuale", "• Pool Scenari d'emergenza ed urgenza ampliato a 15 varianti casuali"] }
+        };
+        function revealVaultPlan(planKey) { playClickSound(); if(rotationInterval) { clearInterval(rotationInterval); rotationInterval = null; } const data = planSpecs[planKey]; document.getElementById('inspectTitle').innerText = data.t; document.getElementById('inspectPrice').innerText = data.p; document.getElementById('inspectDesc').innerText = data.d; const specsUl = document.getElementById('inspectSpecs'); specsUl.innerHTML = ''; data.s.forEach(spec => { let li = document.createElement('li'); li.innerText = spec; specsUl.appendChild(li); }); document.getElementById('inspectionCard').style.display = 'block'; }
+        function closePlanInspection() { playClickSound(); document.getElementById('inspectionCard').style.display = 'none'; startCarouselRotation(); }
+        startCarouselRotation();
+        window.onclick = function(e) { const m = document.getElementById('routingModal'); if (e.target === m) { closeRoutingModal(); } }
     </script>
 </body>
 </html>
